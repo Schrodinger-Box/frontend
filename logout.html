@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Schrödinger's Box - Create Event</title>
+        <link href="./css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="./css/icomoon.css">
+        <link rel="stylesheet" href="./css/createEvent.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+        <style>
+            @font-face {
+                font-family: 'icomoon';
+                src:  url('./css/fonts/icomoon.eot?k35yji');
+                src:  url('./css/fonts/icomoon.eot?k35yji#iefix') format('embedded-opentype'),
+                url('./css/fonts/icomoon.ttf?k35yji') format('truetype'),
+                url('./css/fonts/icomoon.woff?k35yji') format('woff'),
+                url('./css/fonts/icomoon.svg?k35yji#icomoon') format('svg');
+                font-weight: normal;
+                font-style: normal;
+                font-display: block;
+            }
+            .icomoon {
+                font-family: 'icomoon';
+                font-size: 15px;
+                color: rgb(172, 181, 190);
+            }
+        </style>
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html"><span class="icomoon" style="font-size: 20px;"></span>&nbsp;&nbsp;Schrödinger's Box</a>
+            <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ml-auto ml-md-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="profile.html">Settings</a>
+                        <a class="dropdown-item" href="activity.html">Activity Log</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="index.html">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Homepage</div>
+                            <a class="nav-link" href="index.html">
+                                <span class="icomoon"></span>&nbsp;&nbsp;Dashboard
+                            </a>
+                            
+                            <div class="sb-sidenav-menu-heading">My Stuff</div>
+                            <a class="nav-link active" href="createEvent.html">
+                                <span class="icomoon"></span>&nbsp;&nbsp;Create an Event
+                            </a>
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEvents" aria-expanded="false" aria-controls="collapseEvents" id="myEventsSideNav">
+                                <span class="icomoon"></span>&nbsp;&nbsp;My Events
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseEvents" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="organiser.html">
+                                        <span class="icomoon"></span>&nbsp;&nbsp;As Organiser</a>
+                                    <a class="nav-link" href="participant.html">
+                                        <span class="icomoon"></span>&nbsp;&nbsp;As Participant</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link" href="collections.html">
+                                <span class="icomoon"></span>&nbsp;&nbsp;My Collections
+                            </a>
+
+                            <div class="sb-sidenav-menu-heading">Settings</div>
+                            <a class="nav-link" href="profile.html">
+                                <span class="icomoon"></span>&nbsp;&nbsp;Profile
+                            </a>
+                            <a class="nav-link" href="interests.html">
+                                <span class="icomoon"></span>&nbsp;&nbsp;Interests
+                            </a>
+                            <a class="nav-link" href="notifications.html">
+                                <span class="icomoon"></span>&nbsp;&nbsp;Notifications
+                            </a>
+                            <a class="nav-link" href="subscriptions.html">
+                                <span class="icomoon"></span>&nbsp;&nbsp;Subscriptions
+                            </a>
+
+                            <div class="sb-sidenav-menu-heading">Guide</div>
+                            <a class="nav-link" href="help.html">
+                                <span class="icomoon"></span>&nbsp;&nbsp;Event Creation
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logged in as:</div>
+                        Username
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        <h2 class="mt-4">Create an Event</h2>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item"><a href="#">My Stuff</a></li>
+                            <li class="breadcrumb-item active">Create an Event</li>
+                        </ol>
+                        <!--<div class="card mb-4">
+                            <div class="card-body">This page is an example of using the light side navigation option. By appending the <code>.sb-sidenav-light</code> class to the <code>.sb-sidenav</code> class, the side navigation will take on a light color scheme. The <code>.sb-sidenav-dark</code> is also available for a darker option.</div>
+                        </div>-->
+                        <form role="form" id="createEventForm">
+                            <div class="form-group">
+                              <label for="nameNewEvent"><strong>Name of Event *</strong></label>
+                              <input type="text" name="title" class="form-control" id="nameNewEvent" placeholder="Enter name of the event" required>
+                              <p class="help-block small" style="color:rgb(107, 117, 126)">&nbsp;&nbsp;Character Limits: 60 characters</p>
+                            </div><br>
+
+                            <div class="form-group">
+                                <label for="startDTNewEvent">Estimated Starting Date and Time *</label>
+                                <div class="row"><div class="col-lg-6 col-md-8 col-sm-10 col-xs-10">
+                                    <input type="datetime-local" name="time_begin" class="form-control" id="startDTNewEvent" required>
+                                </div></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="endDTNewEvent">Estimated Ending Date and Time *</label>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-8 col-sm-10 col-xs-10">
+                                        <input type="datetime-local" name="time_end" class="form-control" id="endDTNewEvent" required>
+                                    </div>
+                                </div>
+                            </div><br>
+
+                            <div class="form-group">
+                                <label for="typeNewEvent"><strong>Type of event *</strong></label>
+                                <select class="form-control col-lg-6 col-md-8 col-sm-10 col-xs-10 form-control">
+                                    <option value="">Please select the option that describes your event the best</option>
+                                    <option value="physical">Camp</option>
+                                    <option value="physical">Competition</option>
+                                    <option value="physical">Leisure</option>
+                                    <option value="physical">Meeting</option>
+                                    <option value="physical">Performance</option>
+                                    <option value="physical">Religious</option>
+                                    <option value="physical">Research</option>
+                                    <option value="physical">Sports</option>
+                                    <option value="physical">Talk</option>
+                                    <option value="physical">Volunteering</option>
+                                    <option value="virtual">Workshop</option>
+                                </select><br>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="addressNewEvent"><strong>Venue *</strong></label><br>
+                                <div>
+                                    <input type="radio" name="createEventVenueType" id="createEventPhysical">&nbsp;Physical&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" name="createEventVenueType" id="createEventVirtual">&nbsp;Virtual
+                                </div><br>
+                                <div class="createEventPhysicalDiv">
+                                    <input type="text" class="form-control" name="address" id="addressNewEvent" placeholder="E.g. 2 Sports Drive 1" required><br>
+                                    <input type="number" class="form-control" name="zip_code" id="postalCodeNewEvent" placeholder="Enter postal code" required maxlength="6"><br>
+                                    <input type="text" class="form-control" name="zip_code" id="buildingNewEvent" placeholder="E.g. 2 Sports Drive 1" required><br>
+                                    <input type="number" class="form-control" id="poNewEvent" placeholder="Enter postal code of the venue" required><br>
+                                </div>
+                                
+                            </div><br>
+
+                            <div class="form-group">
+                                <label for="capNewEvent">Minimum/Maximum Capacity (if any)</label>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                                        <input type="number" class="form-control" id="minCapNewEvt" placeholder="Enter Minumum Capacity">
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                                        <input type="number" class="form-control" id="maxCapNewEvt" placeholder="Enter Maximum Capacity">
+                                    </div>
+                                </div>
+                            </div><br>
+
+                            <div class="form-group">
+                                <label for="eventDescription">Add descriptions of the event *</label><br>
+                                <textarea class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="eventDescription" rows="3" style="border: 1px solid rgb(205, 212, 219); border-radius: 4px;" required></textarea><br><br>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputImg">Insert images here:&nbsp;&nbsp;</label>
+                              <input type="file" id="inputImg">
+                              <p class="helpblock small" style="color:rgb(107, 117, 126)">The first image will be the cover image of your event.</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputVideo">Insert videos here:&nbsp;&nbsp;</label>
+                                <input type="file" id="inputVideo">
+                            </div><br>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" required>&nbsp;&nbsp;I acknowledge that I am responsible for all the above information.
+                              </label>
+                            </div><br>
+                        </form>
+                        <br>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-3 col-sm-2 col-xs-2"></div>
+                                <div class="col-lg-4 col-md-6 col-sm-8 col-xs-8">
+                                    <button class="btn btn-success btn-block" type="button" id="createEventSubmit" style="width: inherit;">Submit</button>
+                                </div>
+                                <div class="col-lg-4 col-md-3 col-sm-2 col-xs-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Schrödinger's Box 2020</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="./js/scripts.js"></script>
+    </body>
+</html>

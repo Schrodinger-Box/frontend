@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Schrödinger's Box - Subscriptions</title>
+        <link href="./css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="./css/icomoon.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <style>
+            @font-face {
+                font-family: 'icomoon';
+                src:  url('./css/fonts/icomoon.eot?k35yji');
+                src:  url('./css/fonts/icomoon.eot?k35yji#iefix') format('embedded-opentype'),
+                url('./css/fonts/icomoon.ttf?k35yji') format('truetype'),
+                url('./css/fonts/icomoon.woff?k35yji') format('woff'),
+                url('./css/fonts/icomoon.svg?k35yji#icomoon') format('svg');
+                font-weight: normal;
+                font-style: normal;
+                font-display: block;
+            }
+            .icomoon {
+                font-family: 'icomoon';
+                font-size: 15px;
+                color: rgb(172, 181, 190);
+            }
+        </style>
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <a class="navbar-brand" href="dashboard.html"><span class="icomoon" style="font-size: 20px;"></span>&nbsp;&nbsp;Schrödinger's Box</a>
+            <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button
+            ><!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Start your exploration!" aria-label="Search" aria-describedby="basic-addon2" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ml-auto ml-md-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="profile.html">Profile</a>
+                        <a class="dropdown-item" href="help.html">Help</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="login.html">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Homepage</div>
+                            <a class="nav-link" href="dashboard.html">
+                                <span class="icomoon"></span>&nbsp;&nbsp;Dashboard
+                            </a>
+                            
+                            <div class="sb-sidenav-menu-heading">My Stuff</div>
+                            <a class="nav-link" href="createEvent.html">
+                                <span class="icomoon"></span>&nbsp;&nbsp;Create an Event
+                            </a>
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEvents" aria-expanded="false" aria-controls="collapseEvents">
+                                <span class="icomoon"></span>&nbsp;&nbsp;My Events
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseEvents" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="organiser.html">
+                                        <span class="icomoon"></span>&nbsp;&nbsp;As Organiser</a>
+                                    <a class="nav-link" href="participant.html">
+                                        <span class="icomoon"></span>&nbsp;&nbsp;As Participant</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link" href="collections.html">
+                                <span class="icomoon"></span>&nbsp;&nbsp;My Collections
+                            </a>
+
+                            <div class="sb-sidenav-menu-heading">Settings</div>
+                            <a class="nav-link" href="profile.html">
+                                <span class="icomoon"></span>&nbsp;&nbsp;Profile
+                            </a>
+                            <a class="nav-link" href="interests.html">
+                                <span class="icomoon"></span>&nbsp;&nbsp;Interests
+                            </a>
+                            <a class="nav-link" href="notifications.html">
+                                <span class="icomoon"></span>&nbsp;&nbsp;Notifications
+                            </a>
+                            <a class="nav-link" href="subscriptions.html">
+                                <span class="icomoon"></span>&nbsp;&nbsp;Subscriptions
+                            </a>
+
+                            <div class="sb-sidenav-menu-heading">Guide</div>
+                            <a class="nav-link" href="help.html">
+                                <span class="icomoon"></span>&nbsp;&nbsp;Event Creation
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logged in as:</div>
+                        <div id="login_name">username</div>
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        <h2 class="mt-4">Subscriptions</h2>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item">Settings</li>
+                            <li class="breadcrumb-item active">Subscriptions</li>
+                        </ol>
+
+                        <div id="telegram_guide">
+                            <ol><h4 style="margin: 2.5rem 0 0.8rem 0;">Guide</h4>
+                                <li>Search for "<strong>@SchrodingerBoxBot</strong>" on Telegram.</li>
+                                <li>Type "/help" to start your chat, and follow the guide provided by the bot.</li>
+                                <li>For quick subscription, simply type "/subscribe" once you have started the chat.</li>
+                                <li>When asked for Token ID, enter <strong id="tokenID"></strong> into the chat.</li>
+                                <li>When asked for Token Secret, enter <strong id="tokenSecret"></strong> into the chat.<br></li>
+                            </ol><br>
+                            <ul><h4 style="margin-bottom: 0.8rem;">Notice</h4>
+                                <li>This is a personal token, and you should <strong>avoid</strong> sharing it with strangers.</li>
+                                <li>When you have entered something wrong, start over by deleting this chat, search for the bot, and restart your conversation.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Schrödinger's Box 2020</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script>
+            $("#sms_guide").css("display", "none");
+        </script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="./js/scripts.js"></script>
+        <script src="./js/subscriptions.js"></script>
+    </body>
+</html>

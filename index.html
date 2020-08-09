@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Schrödinger's Box - Login</title>
+        <!-- Favicon-->
+        <!--<link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />-->
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <!-- Third party plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="./css/styles_login.css" rel="stylesheet" />
+        <!--<link href="https://schrodinger-box.pit.ovh/mgmt/index.php?explorer/share/file&hash=6721-U51QRmp3rU0m6LUieWLjbjLy2vRvjcvOgCO_qePotzZrD4JTPko3_bszpZiwsNm3ohduWH5UYT1ViQxswI8&name=styles.css" rel="stylesheet" />
+        <link href="https://schrodinger-box.pit.ovh/mgmt/index.php?explorer/share/file&hash=c27bAfkH1WPOXG_j16ig757nkMkSTeVq59FLTeUKU0_a7JaOmoLqeJ8YFBQx40L8ZRFHakuJ6BLEBRLQzR5g_BOnokEksAP4&name=styles_login.css" rel="stylesheet" />-->
+        
+        <!--<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>-->
+        <!--<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>-->
+        
+        <style>
+            @media (max-width: 576px) {
+                header.masthead {
+                    height: 100vh;
+                    min-height: 40rem;
+                    padding-top: 4.5rem;
+                    padding-bottom: 0;
+                }
+                header .masthead .explanation {
+                    font-size: 10rem;
+                }
+                header .masthead .inf{
+                    font-size: 5rem;
+                }
+                footer {
+                    padding-top: 2rem !important;
+                    padding-bottom: 2rem !important;
+                }
+            }
+            @media (min-width: 576px) {
+                header.masthead {
+                    height: 90vh;
+                    min-height: 40rem;
+                    padding-top: 4.5rem;
+                    padding-bottom: 0;
+                }
+                header .masthead .explanation {
+                    font-size: 10rem;
+                }
+                header .masthead .inf{
+                    font-size: 5rem;
+                }
+                footer {
+                    padding-top: 2rem !important;
+                    padding-bottom: 2rem !important;
+                }
+            }
+            @media (min-width: 768px) {
+                header.masthead {
+                    height: 88vh;
+                    min-height: 40rem;
+                    padding-top: 4.5rem;
+                    padding-bottom: 0;
+                }
+                header .masthead .explanation {
+                    font-size: 10rem;
+                }
+                header .masthead .inf{
+                    font-size: 5rem;
+                }
+                footer {
+                    padding-top: 2rem !important;
+                    padding-bottom: 2rem !important;
+                }
+            }
+            @media (min-width: 992px) {
+                header.masthead {
+                    height: 90vh;
+                    min-height: 40rem;
+                    padding-top: 4.5rem;
+                    padding-bottom: 0;
+                }
+                header .masthead .explanation {
+                    font-size: 10rem;
+                }
+                header .masthead .inf{
+                    font-size: 5rem;
+                }
+                footer {
+                    padding-top: 2rem !important;
+                    padding-bottom: 2rem !important;
+                }
+            }
+            @media (min-width: 1200px) {
+                header.masthead {
+                    height: 100vh;
+                    min-height: 40rem;
+                    padding-top: 4.5rem;
+                    padding-bottom: 0;
+                }
+                header.masthead .explanation {
+                    font-size: 3rem;
+                }
+                header.masthead .inf{
+                    font-size: 2rem;
+                }
+                footer {
+                    padding-top: 2rem !important;
+                    padding-bottom: 2rem !important;
+                }
+            }
+        </style>
+    </head>
+    <body id="page-top">
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-10 align-self-end">
+                        <h1 class="text-uppercase text-white font-weight-bold" style="text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);">Schrödinger's Box</h1>
+                        <hr class="divider my-4" />
+                    </div>
+                    <div class="col-lg-8 align-self-baseline">
+                        <p class="text-white-75 font-weight-light mb-5">Explore all possibilities of fun!</p>
+                        <button class="btn btn-primary btn-xl js-scroll-trigger" id="login_button" type="button">Login from Here</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Footer-->
+        <footer class="bg-light py-5">
+            <div class="container"><div class="small text-center text-muted">Copyright © 2020 - Schrödinger's Box</div></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="./js/scripts.js"></script>
+        <script src="./js/login.js"></script>
+        <!--<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://schrodinger-box.pit.ovh/mgmt/index.php?explorer/share/file&hash=989093Tc1IaaGyp3RUjxn7kwCJ0-GdqITqva_EcKifNonEURjN8rr6O8nI92y1Spnwm2k-asS7X46CDNw90Z&name=login.js"></script>-->
+        
+    </body>
+</html>

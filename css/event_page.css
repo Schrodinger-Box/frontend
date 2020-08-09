@@ -1,0 +1,287 @@
+.eventPhoto {
+    position: relative;
+    width: 80%;
+    height: 20rem;
+    background-color: pink;
+    margin: 0 auto;
+}
+.eNBox {
+    width: inherit;
+    position: relative;
+}
+#browseEvtName {
+    /*position: absolute;*/
+    float: left;
+}
+.eventPhoto .eventStatus {
+    /*position: absolute;*/
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.15);
+    text-align: center;
+    vertical-align: center;
+}
+#addCollect:focus{
+    outline: none;
+}
+@font-face {
+    font-family: 'icomoon';
+    src:  url('fonts/icomoon.eot?k35yji');
+    src:  url('fonts/icomoon.eot?k35yji#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?k35yji') format('truetype'),
+    url('fonts/icomoon.woff?k35yji') format('woff'),
+    url('fonts/icomoon.svg?k35yji#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+[class^="icon-"], [class*=" icon-"] {
+    font-family: 'icomoon' !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+@media (min-width: 5000px) {
+    .review_div {
+        width: 100%;
+        position: relative;
+        float: left;
+        border: 1px solid green;
+    }
+    .review_profile_div {
+        position: relative;
+        float: left;
+        border: 1px solid green;
+        width: 100%;
+    }
+    .review_photo_div {
+        position: relative;
+        float: left;
+        width: 3rem;
+        border: 1px solid blue;
+        text-align: center;
+    }
+    .review_profile_photo {
+        width: 3rem;
+        border-radius: 50%;
+    }
+    .review_profile_name {
+        position: relative;
+        float: left;
+        font-size: 1rem;
+        border: 1px solid green;
+        text-align: center;
+    }
+    .review_content {
+        position: relative;
+        float: left;
+        width: 100%;
+        border: 1px solid green;
+    }
+    .review_star {
+        position: relative;
+        float: left;
+        width: 100%;
+        border: 1px solid green;
+    }
+    .review_star span{
+        color: orange;
+        font-size: 1rem;
+    }
+    .review_text {
+        font-size: 1rem;
+        position: relative;
+        float: left;
+        border: 1px solid green;
+    }
+}
+.review_div {
+    width: 90%;
+    position: relative;
+    float: left;
+    display: flex;
+    padding: 0.5rem;
+    margin-right: 10%;
+}
+.review_photo_div {
+    position: relative;
+    float: left;
+    height: 100%;
+    text-align: center;
+}
+.review_profile_photo {
+    width: 3rem;
+    border-radius: 50%;
+}
+.review_content {
+    position: relative;
+    float: left;
+    flex: 1;
+    padding-left: 0.7rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #c0bebe;
+}
+.review_head {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 2.5rem;
+}
+.review_profile_name {
+    position: relative;
+    float: left;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: orangered;
+    height: 2.5rem;
+    vertical-align: center;
+    line-height: 2.5rem;
+}
+.review_star {
+    position: relative;
+    float: right;
+    height: 2.5rem;
+    vertical-align: center;
+    line-height: 2.5rem;
+}
+.review_star span{
+    color: orange;
+    font-size: 1.1rem;
+}
+.review_text {
+    font-size: 1rem;
+    position: relative;
+    width: 100%;
+    float: left;
+    padding-bottom: 0.5rem;
+}
+.review_edit_date {
+    font-size: 0.8rem;
+    color: #727070;
+    position: relative;
+    float: right;
+}
+#reviews_h4 {
+    padding-bottom: 1.2rem;
+    border-bottom: 1.5px solid #bbbbbb;
+}
+#self_review {
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+    position: relative;
+    float: left;
+    width: 100%;
+}
+#self_review_head {
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding-bottom: 0.7rem;
+}
+#self_review_body {
+    position: relative;
+    float: left;
+    display: flex;
+    width: 90%;
+}
+#self_review_photo_div {
+    width: 4rem;
+    position: relative;
+    float: left;
+    display: block;
+    height: 100%;
+    padding-top: 0.2rem;
+}
+#self_review_photo {
+    width: 4rem;
+    border-radius: 50%;
+}
+#self_review_content {
+    position: relative;
+    float: left;
+    flex: 1;
+    padding-left: 2%;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #c0bebe;
+}
+#self_review_stars {
+    position: relative;
+    float: left;
+    width: 100%;
+    display: block;
+    padding: 0.2rem;
+    padding-bottom: 0.5em;
+    cursor: pointer;
+}
+#self_review_stars span {
+    font-size: 1rem;
+}
+#self_review_text {
+    position: relative;
+    float: left;
+    width: 93%;
+    padding-right: 1%;
+}
+#self_review_textarea {
+    width: 100%;
+    padding: 0.5rem;
+    display: block;
+    border: 1px solid rgb(186, 189, 194);
+    background-color: rgb(244, 245, 247);
+    border-radius: 0.3rem;
+}
+#self_review_textarea:hover {
+    outline: none;
+    border: 1px solid rgb(255, 123, 0);
+    background-color: rgb(255, 255, 255);
+}
+#self_review_textarea:focus {
+    outline: none;
+    border: 1px solid rgb(255, 123, 0);
+    background-color: rgb(255, 255, 255);
+}
+#self_review_submit_div {
+    position: relative;
+    float: left;
+    width: 3%;
+}
+#self_review_submit {
+    position: relative;
+    float: left;
+    background-color: rgb(255, 123, 0);
+    font-weight: 600;
+    color: white;
+}
+#self_review_submit:hover {
+    background-color: rgb(255, 142, 37);
+}
+#link_to_photos {
+    font-size: 2rem;
+}
+#link_to_photos:hover {
+    text-decoration: none;
+    color: rgb(255, 102, 0);
+}
+#mark_att_link {
+    font-size: 2rem;
+}
+#mark_att_link:hover {
+    text-decoration: none;
+    color: rgb(255, 102, 0);
+}
+#mark_two {
+    display: none;
+}
+
+
+
+                
+
+
+

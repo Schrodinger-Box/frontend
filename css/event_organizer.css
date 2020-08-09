@@ -1,0 +1,246 @@
+@media (max-width: 575.9px) {
+    #event_photo {
+        display: block;
+        margin: auto;
+        width: 100%;
+    }
+    #dash_sort {
+        width: 70%;
+        display: inline-block;  
+    }
+    #pag_upper, .upper_pag_content, #pag_bottom {
+        display: none;
+    }
+    #dash_sort_label_des {
+        margin-top: 1rem;
+    }
+    #phone_pag_bottom {
+        margin: 0 0 1rem 0;
+    }
+    #display_events {
+        position: relative;
+        float: left;
+        left: 50%;
+    }
+    #display_events>div {
+        list-style-type: none;
+        display: block;
+        position: relative;
+        float: left;
+        width: 100%;
+        right: 50%;
+        padding: 1rem 1rem 1rem 1rem;
+        border: 1px solid red;
+    }
+    #display_events a {
+        text-decoration: none;
+    }
+}
+@media (min-width:576px) and (max-width:767.9px) {
+    #event_photo {
+        display: block;
+        margin: auto;
+        width: 50%;
+    }
+    #dash_sort {
+        width: 50%;
+        display: inline-block; 
+        border: 1px solid green;
+    }
+    #pag_smallS, .upper_pag_content {
+        display: none;
+    }
+    ul#display_events li {
+        list-style-type: none;
+        display: block;
+        float: left;
+        width:100%;
+        padding: 1rem 1rem 1rem 1rem;
+        margin: 0 2rem 1rem 0;
+    }
+    ul#display_events li:hover {
+        box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem #e4e3e3;
+    }
+    ul#display_events li a {
+        text-decoration: none;
+    }
+}
+@media (min-width:768px) and (max-width:991.9px) {
+    #event_photo {
+        display: block;
+        margin: auto;
+        width: 50%;
+    }
+    #dash_sort {
+        width: 50%;
+        display: inline-block;  
+        border: 1px solid green;
+    }
+    ul#display_events li {
+        list-style-type: none;
+        display: block;
+        float: left;
+        width:100%;
+        padding: 1rem 1rem 1rem 1rem;
+        margin: 0 2rem 1rem 0;
+    }
+    ul#display_events li:hover {
+        box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem #e4e3e3;
+    }
+    ul#display_events li a {
+        text-decoration: none;
+    }
+}
+@media (min-width:992px) and (max-width:1199.9px) {
+    #event_photo {
+        display: block;
+        margin: auto;
+        width: 50%;
+    }
+    #dash_sort {
+        width: 50%;
+        display: inline-block; 
+        border: 1px solid green;
+    }
+    ul#display_events li {
+        list-style-type: none;
+        display: block;
+        float: left;
+        width:100%;
+        padding: 1rem 1rem 1rem 1rem;
+        margin: 0 2rem 1rem 0;
+    }
+    ul#display_events li:hover {
+        box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem #e4e3e3;
+    }
+    ul#display_events li a {
+        text-decoration: none;
+    }
+}
+@media (min-width: 1200px) {
+    #event_photo {
+        display: block;
+        margin: auto;
+        width: 30%;
+    }
+    #dash_sort {
+        width: 50%;
+        display: inline-block;  
+        border: 1px solid green;
+    }
+    #display_events {
+        position: relative;
+        float: left;
+        left: 50%;
+    }
+    #display_events>div {
+        list-style-type: none;
+        display: block;
+        position: relative;
+        float: left;
+        right: 50%;
+        width: 49%;
+        margin: 0 1% 0.5rem 0;
+        padding: 1rem 1rem 1rem 1rem;
+        border: 1px solid red;
+    }
+    #display_events a {
+        text-decoration: none;
+    }
+    #pag_upper {
+        display:block; 
+        position: relative; 
+        float: left;
+        width: 100%;
+        border: 1px solid red;
+        margin: 1rem 0;
+    }
+    #pag_upper a, #pag_upper input {
+        display: block;
+        position: relative;
+        float: left;
+        right: 1rem;
+    }
+    #display_events>div:hover {
+        box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem #e7e6e6;;
+    }
+}
+/*.pagination {
+    display: inline-block;
+}
+.pagination a {
+    color: black;
+    padding: 0.3rem 0.8rem;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+}
+#phone_pag_bottom a {
+    display: inline-block;
+    font-size: 1rem;
+    color: black;
+    padding: 0.5rem 0.8rem;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+    margin: 0 1px;
+}
+#dash_total_pg,
+#pagination_text {
+    color: black;
+    float: left;
+    padding: 0.3rem 0.8rem;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 0px;
+    margin: 0 4px;
+}
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+#pagination_text:hover:not(.active) {
+    background-color: #fff;
+}
+#dash_total_pg:hover:not(.active) {
+    background-color: #fff;
+}
+.center {
+    text-align: center;
+}
+#search_page {
+    background-color: #ddd;
+}
+.cursor_pointer:hover {
+    cursor: pointer;
+}*/
+.delete_event:hover {
+    cursor: pointer;
+}
+.paginate_button.previous a{
+    position: relative;
+    float: left;
+    display: block;
+}
+.paginate_button.next a{
+    position: relative;
+    float: left;
+    display: block;
+}
+.paginate_button.first a{
+    position: relative;
+    float: left;
+    display: block;
+}
+.paginate_button.last a{
+    position: relative;
+    float: left;
+    display: block;
+}
+  
+  

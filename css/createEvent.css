@@ -1,0 +1,188 @@
+/*.createEventPhysicalDiv {
+    background-color: pink;
+}
+
+#createEventPhysical ~ :not(checked) ~  .createEventPhysicalDiv{
+    display: none;
+}
+
+#createEventPhysical:checked  ~  .createEventPhysicalDiv{
+   display: block;
+}
+
+.createEventPhysicalDiv {
+    background-color: pink;
+}
+
+#createEventVirtual:checked .createEventPhysicalDiv{
+    display: none;
+    background-color: aliceblue;
+}
+
+#createEventPhysical:checked .createEventPhysicalDiv{
+   display: block;
+}
+
+#createEventPhysical:hover .createEventPhysicalDiv{
+    background-color: black;
+}
+
+
+
+.createEventPhysicalDiv{
+    background-color: pink;
+}
+
+#createEventPhysical ~ :not(checked) ~  .createEventPhysicalDiv{
+   display: block;
+}
+#createEventPhysical:checked  ~  .createEventPhysicalDiv{
+  display: none;
+}*/
+/*.uploadImgBtn {
+
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    position: relative;
+    background: url("./images/output-onlinepngtools.png") no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+.uploadImgBtn .uploadImg {
+    position: absolute;
+    right: 0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+.pic{
+    width: 100px;
+    height: 100px;
+}
+.pic img {
+    width: 100%;
+    height: 100%;
+}*/
+
+
+/*.img_preview {
+    height: 5rem;
+    margin: 0 0.8rem 1rem 0;
+    border: 1px solid grey;
+
+}
+.uploadImgBtn {
+    width: 5rem;
+    height: 5rem;
+    cursor: pointer;
+    position: relative;
+    background: url("./images/output-onlinepngtools.png") no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+.uploadImgBtn .uploadImg {
+    position: absolute;
+    right: 0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    border: 1px solid red;
+}*/
+
+.uploadImgBtn {
+    width: 5rem;
+    height: 5rem;
+    cursor: pointer;
+    position: relative;
+    background: url("./images/output-onlinepngtools.png") no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+.uploadImgBtn .uploadImg {
+    position: absolute;
+    right: 0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/*input[type="file"] {
+    display: block;
+}*/
+.img_preview {
+    height: 7rem;
+    cursor: pointer;
+    position: relative;
+    float: left;
+}
+.pip {
+    position: relative;
+    float: left;
+    display: block;
+}
+/*.delete_image {
+    position: absolute;
+    font-size: 3rem;
+    right: 1rem; 
+    top: 1rem;
+    color: black;
+}*/
+.remove {
+    display: block;
+    position: absolute;
+    font-size: 2rem;
+    /*width: 100%;*/
+    bottom: 0.2rem;
+    right: 0.2rem;
+    padding: 0.3rem;
+    color: white;
+    font-weight: 700;
+    text-shadow: 3px 3px 3px 3px black;
+    text-align: center;
+    cursor: pointer;
+}
+/*.pip:hover .remove{
+    display: block;
+}*/
+.remove:hover {
+    color: black;
+}
+/*.gallery .img-item{
+    position: relative;
+}
+.gallery .img-item .delete{
+    position: absolute;
+    display: block;
+    width: 20px;
+    height:20px;
+    color: #fff;
+    background: rgba(0,0,0,0.7);
+    line-height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    top: 25px;
+    right: 25px;
+    cursor: pointer;
+}
+.img{
+  width: 300px;
+  margin: 20px;
+}*/
+
+
+
+
+
+
+
+
+
+

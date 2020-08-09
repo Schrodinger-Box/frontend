@@ -1,0 +1,84 @@
+@media (max-width: 575.9px) {
+
+}
+@media (min-width:576px) and (max-width:767.9px) {
+    #profile_photo_div {
+        margin: 20px 400px 0 400px;
+        position: relative;
+        width: 531px;
+        height: 354px;
+    }
+    #profile_cover {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 531px;
+        height: 354px;
+        background: rgba(101, 101, 101, 0.6);
+        color: #ffffff;
+        opacity: 0;
+    }
+    #profile_cover h3 {
+        text-align: center;
+    }
+    #profile_photo_div a:hover #profile_cover {
+        opacity: 1;           
+    }
+}
+@media (min-width:768px) and (max-width:991.9px) {
+#profile_photo {
+        border-radius: 50%;
+        width:20rem;
+    }
+    #profile_cover {
+        display: block;
+        background-color: #888888;
+        width: 20rem;
+        height: 20rem;
+    }
+    #profile_photo:hover #profile_cover {
+        display: block;
+    }
+}
+@media (min-width:992px) and (max-width:1199.9px) {
+    #profile_photo {
+        border-radius: 50%;
+        width: 20rem;
+        height: 20rem;
+    }
+}
+@media (min-width: 1200px) {
+    #profile_photo {
+        border-radius: 50%;
+        width: 18rem;
+        height: 18rem;
+    }
+    #profile_photo_div {
+        position: relative;
+        width: 18rem;
+        height: 18rem;
+    }
+    #profile_cover {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 18rem;
+        height: 18rem;
+        border-radius: 50%;
+        background: rgba(104, 103, 103, 0.6);
+        color: #ffffff;
+        text-shadow: -0.5px 0.5px 0 rgb(58, 57, 57), 0.5px 0.5px 0 rgb(58, 57, 57),
+            0.5px -0.5px 0 rgb(58, 57, 57),-0.5px -0.5px 0 rgb(58, 57, 57);
+        opacity: 0;
+    }
+    #profile_cover h4 {
+        text-align: center;
+        line-height: 18rem;
+        width: 18rem;
+    }
+    #profile_photo_div a:hover #profile_cover {
+        opacity: 1;           
+    }
+}
+  
+  
