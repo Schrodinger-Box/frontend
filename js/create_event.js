@@ -14,18 +14,18 @@ $(function () {
         async: false,
         processData: false,
         contentType: "application/vnd.api+json",
-        success: function(data) {
+        success: function (data) {
             //console.log(true);
         },
-        error: function(err) {
+        error: function (err) {
             localStorage.setItem("uptime", false);
-        }, 
+        },
     });
 
     //console.log(t_id+" "+t_secret);
 
     function ISO8601_convert(time_id) {
-        var output_time = $(time_id).val()+":00.000Z";
+        var output_time = $(time_id).val() + ":00.000Z";
         var new_hour;
         var new_day;
         var temp = Number(output_time.substr(11, 2))
@@ -61,7 +61,7 @@ $(function () {
                 new_month = 1;
                 new_day = 1;
             } else if (
-                ((new_month == 1 || new_month == 3 || new_month == 5 || new_month == 7 ||  new_month == 8 || new_month == 10) && new_day == 32) || 
+                ((new_month == 1 || new_month == 3 || new_month == 5 || new_month == 7 || new_month == 8 || new_month == 10) && new_day == 32) ||
                 ((new_month == 4 || new_month == 6 || new_month == 9 || new_month == 11) && new_day == 31) ||
                 ((new_year % 4 == 0 && new_year % 100 != 0 || new_year % 400 == 0) && new_month == 2 && new_day == 30) ||
                 (new_month == 2 && new_day == 29)) {
@@ -73,134 +73,36 @@ $(function () {
         return output_time;
     }
 
-    /*$(window).bind('beforeunload', function(){
-        return "Are you sure you want to leave?";
-    });*/
-
     function handle_error(jqXHR, textStatus, errorThrown) {
-        window.location.href = "error_page.html?status=" + jqXHR.status + "&detail=" + errors[0].detail;
+        window.location.href = "error.html?status=" + jqXHR.status + "&detail=" + errors[0].detail;
     }
-
-    
-    /*$("#uploadImgBtn").click(function(){
-        var $input = $("#file");
-        console.log($input);
-        $("#inputImg").on("change", function(){
-            console.log(this);
-            var files = this.files;
-            var length = files.length;
-            console.log("You have chosen"+length+"images.");
-            $.each(files,function(key,value){
-                var div = document.createElement("div"),
-                    img = document.createElement("img");
-                div.className = "pic";
-                var fr = new FileReader();
-                fr.onload = function(){
-                    img.src = this.result;
-                    div.appendChild(img);
-                    document.body.appendChild(div);
-                }
-                fr.readAsDataURL(value);
-            });
-        });
-        $input.removeAttr("id");
-        var newInput = '<input class="uploadImg test" type="file" name="file" multiple id="inputImg">';
-        $(this).append($(newInput));
-
-    });*/
-    
-
-    /*$("#input_Img").change(function(){
-        $("#gallery").innerHTML="";
-        var img=$("#input_Img").files; 
-        var div=document.createElement("div");
-        for(var i=0;i<img.length;i++){
-            var file=img[i]; 
-            var url=URL.createObjectURL(file); 
-            var box=document.createElement("img"); 
-            box.setAttribute("src",url); 
-            box.className='img img_preview';
-
-            var imgBox=document.createElement("div");
-            imgBox.style.display='inline-block';
-            imgBox.className='img-item';
-
-            var deleteIcon = document.createElement("span");
-            deleteIcon.className = 'delete';
-            deleteIcon.innerText = 'x';
-            deleteIcon.dataset.filename = img[i].name;
-            imgBox.appendChild(deleteIcon);
-
-            imgBox.appendChild(box);
-            var body=document.getElementsByClassName("gallery")[0]; 
-            body.appendChild(imgBox);
-
-            that.files = img;
-            $(deleteIcon).click(function () {
-                var filename = $(this).data("filename");
-                $(this).parent().remove();
-                var fileList = Array.from(that.files);
-
-                for(var j=0;j<fileList.length;j++){
-                    if(fileList[j].name = filename){
-                        fileList.splice(j,1);
-                        break;
-                    }
-                }
-                that.files = fileList;
-            })
-        }
-    })*/
-
-
-
-    /*var imagesPreview = function(input, placeToInsertImagePreview) {
-        if (input.files) {
-            var filesAmount = input.files.length;
-            for (i = 0; i < filesAmount; i++) {
-                var reader = new FileReader();
-                reader.onload = function(event) {
-                    $($.parseHTML('<img>')).attr({'src':event.target.result}).addClass('img_preview').appendTo(placeToInsertImagePreview);
-                    /*$("<div class='pip'><img class='img_preview' src='"+event.target.result+"'><div class='icomoon delete_image></div></div>").insertBefore($("#inputImg"));
-                    $(".delete_image").click(function(){
-                        $(this).parent(".pip").remove();
-                    });
-                }
-                reader.readAsDataURL(input.files[i]);
-            }
-        }
-    };
-
-    $('#inputImg').on('change', function() {
-        imagesPreview(this, 'div.gallery');
-    });*/
 
     if (window.File && window.FileList && window.FileReader) {
-        $("#inputImg").on("change", function(e) {
-          var files = e.target.files,
-            filesLength = files.length;
-          for (var i = 0; i < filesLength; i++) {
-            var f = files[i]
-            var fileReader = new FileReader();
-            fileReader.onload = (function(e) {
-                //.insertAfter("#inputImg")
-              var file = e.target;
-              $("<div class='pip'>" +
-                "<img class='img_preview' src='" + e.target.result + "' title='" + file.name + "'>" +
-                //"<span class='remove icomoon'>Remove </span>" +
-                "<span class='remove special_icomoon'></span>" +
-                "</div>").appendTo($("#gallery"));
-              $(".remove").click(function(){
-                $(this).parent(".pip").remove();
-              });
-            });
-            fileReader.readAsDataURL(f);
-          }
+        $("#inputImg").on("change", function (e) {
+            var files = e.target.files,
+                filesLength = files.length;
+            for (var i = 0; i < filesLength; i++) {
+                var f = files[i]
+                var fileReader = new FileReader();
+                fileReader.onload = (function (e) {
+                    //.insertAfter("#inputImg")
+                    var file = e.target;
+                    $("<div class='pip'>" +
+                        "<img class='img_preview' src='" + e.target.result + "' title='" + file.name + "'>" +
+                        //"<span class='remove icomoon'>Remove </span>" +
+                        "<span class='remove special_icomoon'></span>" +
+                        "</div>").appendTo($("#gallery"));
+                    $(".remove").click(function () {
+                        $(this).parent(".pip").remove();
+                    });
+                });
+                fileReader.readAsDataURL(f);
+            }
         });
-      } else {
+    } else {
         alert("Your browser doesn't support to File API");
     }
-    
+
     function patch_file(file_id) {
         $.ajax({
             type: "PATCH",
@@ -209,25 +111,25 @@ $(function () {
             headers: {
                 "X-Token-ID": t_id,
                 "X-Token-Secret": t_secret
-            }, 
+            },
             data: JSON.stringify({
                 "data": {
-                  "type": "file",
-                  "id": file_id,
-                  "attributes": {
-                    "status": "active"
-                  }
+                    "type": "file",
+                    "id": file_id,
+                    "attributes": {
+                        "status": "active"
+                    }
                 }
             }),
             async: false,
             processData: false,
             contentType: "application/vnd.api+json",
-            success: function (response) {console.log("patch_finish")},
-            error: function(jqXHR, textStatus, errorThrown) {
+            success: function (response) { console.log("patch_finish") },
+            error: function (jqXHR, textStatus, errorThrown) {
                 handle_error(jqXHR, textStatus, errorThrown);
             }
         });
-    } 
+    }
 
     function upload_img(file, edpt, qp) {
         $.ajax({
@@ -242,8 +144,8 @@ $(function () {
             contentType: false,
             processData: false,
             cache: false,
-            success: function (response) {console.log("put_finish")},
-            error: function(jqXHR, textStatus, errorThrown) {
+            success: function (response) { console.log("put_finish") },
+            error: function (jqXHR, textStatus, errorThrown) {
                 handle_error(jqXHR, textStatus, errorThrown);
             }
         });
@@ -256,8 +158,9 @@ $(function () {
             alert("Please enter the starting time!");
         } else if ($("#createEvent_time_end").val() === "" || $("#createEvent_time_end").val() === null) {
             alert("Please enter the ending time!");
-        } else if (new Date($("#createEvent_time_begin").val()).toISOString() > new Date($("#createEvent_time_end").val()).toISOString()) { alert("The event cannot end earlier than its starting time! Please reset the time!");
-        } else if (new Date($("#createEvent_time_end").val()).toISOString() < new Date().toISOString() ) {
+        } else if (new Date($("#createEvent_time_begin").val()).toISOString() > new Date($("#createEvent_time_end").val()).toISOString()) {
+            alert("The event cannot end earlier than its starting time! Please reset the time!");
+        } else if (new Date($("#createEvent_time_end").val()).toISOString() < new Date().toISOString()) {
             alert("The event must not have ended!");
         } else if (!$("#createEventPhysical").is(":checked") && !$("#createEventVirtual").is(":checked")) {
             alert("Please select a location type!");
@@ -271,14 +174,14 @@ $(function () {
             alert("Please select an event type!");
         }
     }
-    
+
     var position = 0;
     var img_files = [];
 
-    $('#createEventSubmit').click(function() {
+    $('#createEventSubmit').click(function () {
         check_form();
         var submit_confirm = confirm("Are you sure you want to submit this form?");
-	    if (submit_confirm === true) {
+        if (submit_confirm === true) {
             var t = localStorage.getItem("auth_token");
             var t_id = JSON.parse(t).data.id;
             var t_secret = JSON.parse(t).data.attributes.secret;
@@ -297,23 +200,20 @@ $(function () {
                         headers: {
                             "X-Token-ID": t_id,
                             "X-Token-Secret": t_secret
-                        }, 
+                        },
                         data: JSON.stringify({
                             "data": {
-                              "type": "file",
-                              "attributes": {
-                                "filename": file.name,
-                                "type": "images"
-                              }
+                                "type": "file",
+                                "attributes": {
+                                    "filename": file.name,
+                                    "type": "images"
+                                }
                             }
                         }),
                         async: false,
                         processData: false,
                         contentType: "application/vnd.api+json",
                         success: function (response) {
-                            //console.log("post_finish");
-                            //console.log(response);
-                            //console.log(response.data.meta.endpoint);
                             file_arr.push(response);
                             img_files.push({
                                 "type": "file",
@@ -322,7 +222,7 @@ $(function () {
                             upload_img(file, response.data.meta.endpoint, response.data.meta.qp);
                             patch_file(response.data.id);
                         },
-                        error: function(jqXHR, textStatus, errorThrown) {
+                        error: function (jqXHR, textStatus, errorThrown) {
                             handle_error(jqXHR, textStatus, errorThrown);
                         }
                     });
@@ -330,7 +230,7 @@ $(function () {
             }
             console.log(img_files);
             var array = [];
-            array.push({"type":"file", "id":"70"});
+            array.push({ "type": "file", "id": "70" });
             console.log(array);
             console.log(JSON.stringify(array));
             console.log(JSON.stringify(img_files));
@@ -342,7 +242,7 @@ $(function () {
                     "X-Token-ID": t_id,
                     "X-Token-Secret": t_secret
                 },
-                data:JSON.stringify({
+                data: JSON.stringify({
                     "data": {
                         "type": "event",
                         "attributes": {
@@ -371,7 +271,7 @@ $(function () {
                 processData: false,
                 contentType: "application/vnd.api+json",
                 traditional: true,
-                success: function(e) {
+                success: function (e) {
                     console.log(img_files);
                     console.log(e);
                     alert("Congratulations! You have successfully created an event!");
@@ -380,51 +280,19 @@ $(function () {
                     localStorage.setItem("event_" + event_id, evt);
                     //window.location.reload();
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus, errorThrown) {
                     handle_error(jqXHR, textStatus, errorThrown);
                 }
             });
         }
-    
+
     });
-
-    /*$("#createEventForm").validate({
-        rules: {
-          title: {
-            required: true,
-            maxlength: 60
-          },
-          time_begin: "required",
-          time_end: "required",
-          location: {
-              type: "required",
-              zip_code: "#createEventPhysical:checked",
-              address: "#createEventPhysical:checked",
-              building: "#createEventPhysical:checked"
-          },
-          type: "required"
-        },
-        messages: {
-          title: "Please enter the name of the event.",
-          time_begin: "Please select the starting date and time.",
-          time_end: "Please select the ending date and time.",
-          location: {
-              type: "Please select the type of the event.",
-              zip_code: "Please enter the postal code.",
-              address: "Please enter the address.",
-              building: "Please input the exact building."
-          },
-          type: "Please select a main theme for your event."
-        } 
-    });*/
-
-
 });
 
 
-    
 
 
-    
+
+
 
 

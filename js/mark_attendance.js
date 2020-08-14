@@ -1,12 +1,10 @@
-$(function () { 
+$(function () {
 
-    
+
     var endpoint = "https://schrodinger-box.pit.ovh/api";
     var t = localStorage.getItem("auth_token");
     var t_id = JSON.parse(t).data.id;
     var t_secret = JSON.parse(t).data.attributes.secret;
-    //console.log(t_id+" "+t_secret);
-
 
     function get_url_params(key) {
         var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
@@ -26,36 +24,36 @@ $(function () {
         async: true,
         processData: false,
         contentType: "application/vnd.api+json",
-        success: function(data) {
+        success: function (data) {
             localStorage.setItem("uptime", true);
         },
-        error: function(err) {
+        error: function (err) {
             localStorage.setItem("uptime", false);
-        }, 
+        },
     });
 
 
     if (localStorage.getItem("uptime")) {
         $.ajax({
-            type:'GET',
+            type: 'GET',
             url: endpoint + '/user',
-            dataType:'json',
-            async: true, 
+            dataType: 'json',
+            async: true,
             processData: false,
             contentType: "application/vnd.api+json",
             headers: {
                 "X-Token-ID": t_id,
                 "X-Token-Secret": t_secret
             },
-            success:function(u){
+            success: function (u) {
                 //console.log(u);
                 $("#login_name").text(u.data.attributes.nickname);
                 var usr = JSON.stringify(u);
                 window.localStorage.setItem("user", usr);
             },
-            error: function(jqXHR, textStatus, errorThrown) {
+            error: function (jqXHR, textStatus, errorThrown) {
                 if (jqXHR.status == 404) {
-                    window.location.href="register.html";
+                    window.location.href = "register.html";
                 } else {
                     handle_error(jqXHR, textStatus, errorThrown);
                 }
@@ -66,7 +64,7 @@ $(function () {
             var us_name = JSON.parse(localStorage.getItem("user")).data.attributes.nickname;
             $("#login_name").text(us_name);
         } else {
-            window.location.href = "error_page.html";
+            window.location.href = "error.html";
         }
     }
 
@@ -74,7 +72,7 @@ $(function () {
 
     let signup_map = new Map();
     let user_map = new Map();
-    
+
 
     $.ajax({
         type: "GET",
@@ -87,7 +85,7 @@ $(function () {
         async: true,
         processData: false,
         contentType: "application/vnd.api+json",
-        success: function(event) {
+        success: function (event) {
             var all_records = event.included;
             for (var i = 0; i < all_records.length; i++) {
                 var obj = all_records[i];
@@ -101,7 +99,7 @@ $(function () {
             localStorage.user_map = JSON.stringify(Array.from(user_map));
             page_show_events();
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             handle_error(jqXHR, textStatus, errorThrown);
         }
     });
@@ -119,44 +117,44 @@ $(function () {
             columnDefs: [{
                 "targets": 3,
                 "orderable": false
-            }] 
-          });
+            }]
+        });
         table.clear();
 
-        signup_map.forEach(function(value, key) {
+        signup_map.forEach(function (value, key) {
             if (value.attributes.status == "created") {
-                table.row.add([value.id, user_map.get(key).attributes.nickname, ISO8601_to_normal_time(value.attributes.created_at), 
-                    '<span class="icomoon mark_att_icomoon" style="display: inline-block" id="'+value.id+'"></span><span id="marking">click to mark</span>']);
+                table.row.add([value.id, user_map.get(key).attributes.nickname, ISO8601_to_normal_time(value.attributes.created_at),
+                '<span class="icomoon mark_att_icomoon" style="display: inline-block" id="' + value.id + '"></span><span id="marking">click to mark</span>']);
             } else {
-                table.row.add([value.id, user_map.get(key).attributes.nickname, ISO8601_to_normal_time(value.attributes.created_at), 
-                    '<span class="icomoon no_change" style="display: inline-block" id="'+value.id+'"></span>&nbsp;&nbsp;marked']);
+                table.row.add([value.id, user_map.get(key).attributes.nickname, ISO8601_to_normal_time(value.attributes.created_at),
+                '<span class="icomoon no_change" style="display: inline-block" id="' + value.id + '"></span>&nbsp;&nbsp;marked']);
             }
-            
+
         });
         table.draw();
     }
 
-    $(document).on('mouseover','.mark_att_icomoon',function(){
+    $(document).on('mouseover', '.mark_att_icomoon', function () {
         $(this).css("cursor", "pointer");
     });
 
-    $(document).on('mouseover','.no_change',function(){
+    $(document).on('mouseover', '.no_change', function () {
         $(this).css("cursor", "not-allowed");
     });
 
-    $(document).on('click','.mark_att_icomoon',function(){
+    $(document).on('click', '.mark_att_icomoon', function () {
         if ($(this).attr("checked")) {
             $(this).css("color", "grey");
             $(this).attr("checked", false);
-            $(this).siblings( "#marking" ).html("click to mark");
+            $(this).siblings("#marking").html("click to mark");
         } else if (!$(this).attr("checked")) {
             $(this).css("color", "orangered");
             $(this).attr("checked", true);
-            $(this).siblings( "#marking" ).html("click to unmark");
+            $(this).siblings("#marking").html("click to unmark");
         }
     });
 
-    $(document).on('click','#submit_attendance',function(){
+    $(document).on('click', '#submit_attendance', function () {
         var msg = confirm("The marked attendance record cannot be unmarked. Are you sure you would like to proceed?")
         if (msg == true) {
             var t = localStorage.getItem("auth_token");
@@ -165,9 +163,9 @@ $(function () {
             var data = table.rows().data();
             data.each(function (value, index) {
                 console.log(value);
-                if ($("#"+value[0]).css("color") == "rgb(255, 69, 0)") {
-                    $.ajax({  
-                        type: "PATCH", 
+                if ($("#" + value[0]).css("color") == "rgb(255, 69, 0)") {
+                    $.ajax({
+                        type: "PATCH",
                         dataType: "json",
                         url: endpoint + "/event_signup",
                         headers: {
@@ -186,10 +184,10 @@ $(function () {
                         async: true,
                         processData: false,
                         contentType: "application/vnd.api+json",
-                        success: function(e) {
+                        success: function (e) {
                             alert("Congratulations! You have successfully marked the attendances!");
                         },
-                        error: function(jqXHR, textStatus, errorThrown) {
+                        error: function (jqXHR, textStatus, errorThrown) {
                             handle_error(jqXHR, textStatus, errorThrown);
                         }
                     });
@@ -199,9 +197,9 @@ $(function () {
         }
     });
 
-    
+
     function ISO8601_convert(time_id) {
-        var output_time = $(time_id).val()+":00.000Z";
+        var output_time = $(time_id).val() + ":00.000Z";
         var new_hour;
         var new_day;
         var temp = Number(output_time.substr(11, 2))
@@ -237,7 +235,7 @@ $(function () {
                 new_month = 1;
                 new_day = 1;
             } else if (
-                ((new_month == 1 || new_month == 3 || new_month == 5 || new_month == 7 ||  new_month == 8 || new_month == 10) && new_day == 32) || 
+                ((new_month == 1 || new_month == 3 || new_month == 5 || new_month == 7 || new_month == 8 || new_month == 10) && new_day == 32) ||
                 ((new_month == 4 || new_month == 6 || new_month == 9 || new_month == 11) && new_day == 31) ||
                 ((new_year % 4 == 0 && new_year % 100 != 0 || new_year % 400 == 0) && new_month == 2 && new_day == 30) ||
                 (new_month == 2 && new_day == 29)) {
@@ -250,124 +248,8 @@ $(function () {
     }
 
     function handle_error(jqXHR, textStatus, errorThrown) {
-        window.location.href = "error_page.html?status=" + jqXHR.status + "&detail=" + errors[0].detail;
+        window.location.href = "error.html?status=" + jqXHR.status + "&detail=" + errors[0].detail;
     }
-
-
-/*$(".next_page_events").click(function() {
-        if ($("#current_page_events").html() < Math.ceil($("#dash_size").val()/$("#dash_off").val())) {
-            page_flip++;
-            $("#current_page_events").html(page_flip);
-            start_enquiry();
-        }
-    });*/
-
-    /*$(".prev_page_events").click(function() {
-        if ($("#current_page_events").html() != 1) {
-            page_flip--;
-            $("#current_page_events").html(page_flip);
-            start_enquiry();
-        }
-    });*/
-
-    /*function enquiry(st, s, off) {
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: endpoint + "/events?sort="+st+"&size="+s+"&offset="+off,
-            headers: {
-                "X-Token-ID": t_id,
-                "X-Token-Secret": t_secret
-            },
-            async: true,
-            processData: false,
-            contentType: "application/vnd.api+json",
-            success: function(events) {
-                console.log(events);
-                store_event_list(events);
-                page_show_events();
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                handle_error(jqXHR, textStatus, errorThrown);
-            }
-        });
-    }*/
-
-    /*function start_enquiry() {
-        var st = $("#desc_dash_sort").is(':checked') ? "-"+$("#dash_sort option:selected").val() : $("#dash_sort option:selected").val();
-        if ($("#dash_size").val() != "" && $("#dash_off").val() != "") {
-            var pg = $("#dash_page").val();
-            var off = $("#dash_off").val() * (page_flip - 1);
-            enquiry(st, s, off);
-        } else {
-            enquiry(st, pg);
-        }
-    }*/
-
-
-    /**
-     * enquiry("created_at", 10, 0);
-    $("#current_page_events").html("1"); 
-    var page_flip = 1;
-
-    function start_enquiry() {
-        var st = $("#desc_dash_sort").is(':checked') ? "-"+$("#dash_sort option:selected").val() : $("#dash_sort option:selected").val();
-        if ($("#dash_size").val() != "" && $("#dash_off").val() != "") {
-            var s = $("#dash_off").val() * page_flip;
-            var off = $("#dash_off").val() * (page_flip - 1);
-            enquiry(st, s, off);
-        } else {
-            enquiry(st, 10, 0);
-        }
-    }
-
-    $("#dash_sort").change(function() {start_enquiry();});
-    $("#dash_size").change(function() {start_enquiry();});
-    $("#dash_off").change(function() {start_enquiry();});
-    $("#desc_dash_sort").change(function() {start_enquiry();});
-
-    $("#prev_page_events").click(function() {
-        if ($("#current_page_events").html() != 1) {
-            page_flip--;
-            $("#current_page_events").html(page_flip);
-            start_enquiry();
-        }
-    });
-
-    $("#next_page_events").click(function() {
-        if ($("#current_page_events").html() < Math.ceil($("#dash_size").val()/$("#dash_off").val())) {
-            page_flip++;
-            $("#current_page_events").html(page_flip);
-            start_enquiry();
-        }
-    });
-
-    function enquiry(st, s, off) {
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: endpoint + "/events?sort="+st+"&size="+s+"&offset="+off,
-            headers: {
-                "X-Token-ID": t_id,
-                "X-Token-Secret": t_secret
-            },
-            async: true,
-            processData: false,
-            contentType: "application/vnd.api+json",
-            success: function(events) {
-                console.log(events);
-                store_event_list(events);
-                page_show_events();
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                handle_error(jqXHR, textStatus, errorThrown);
-            }
-        });
-    }
-     */
-
-    
-
 });
 
 

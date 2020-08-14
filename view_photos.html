@@ -7,22 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Schrödinger's Box - Participant</title>
+    <title>Schrödinger's Box - Event Photos</title>
     <link href="./css/styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="./css/icomoon.css">
+    <link rel="stylesheet" href="./css/event_photos.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"
         crossorigin="anonymous"></script>
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"
-        crossorigin="anonymous" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"
-        crossorigin="anonymous"></script>
-    <style>
-        .delete_signup:hover {
-            cursor: pointer;
-        }
-    </style>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
 
 <body class="sb-nav-fixed">
@@ -30,7 +21,8 @@
         <a class="navbar-brand" href="dashboard.html"><span class="icomoon"
                 style="font-size: 20px;"></span>&nbsp;&nbsp;Schrödinger's Box</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i
-                class="fas fa-bars"></i></button><!-- Navbar Search-->
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
             <div class="input-group">
                 <input class="form-control" type="text" placeholder="Start your exploration!" aria-label="Search"
@@ -49,7 +41,7 @@
                     <a class="dropdown-item" href="profile.html">Profile</a>
                     <a class="dropdown-item" href="help.html">Help</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="logout.html">Logout</a>
+                    <a class="dropdown-item" href="login.html">Logout</a>
                 </div>
             </li>
         </ul>
@@ -69,7 +61,7 @@
                             <span class="icomoon"></span>&nbsp;&nbsp;Create an Event
                         </a>
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEvents"
-                            aria-expanded="false" aria-controls="collapseEvents">
+                            aria-expanded="false" aria-controls="collapseEvents" id="myEventsSideNav">
                             <span class="icomoon"></span>&nbsp;&nbsp;My Events
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
@@ -99,7 +91,6 @@
                         <a class="nav-link" href="subscriptions.html">
                             <span class="icomoon"></span>&nbsp;&nbsp;Subscriptions
                         </a>
-
                         <div class="sb-sidenav-menu-heading">Guide</div>
                         <a class="nav-link" href="help.html">
                             <span class="icomoon"></span>&nbsp;&nbsp;Event Creation
@@ -108,60 +99,23 @@
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
-                    <div id="login_name">username</div>
+                    <div id="login_name">Username</div>
                 </div>
             </nav>
         </div>
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid">
-                    <h2 class="mt-4">My Events - As Participant</h2>
+                    <h2 class="mt-4">Browse Event</h2>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item">My Stuff</li>
-                        <li class="breadcrumb-item">My Events</li>
-                        <li class="breadcrumb-item active">As Participant</li>
+                        <li class="breadcrumb-item">Dashboard</li>
+                        <li class="breadcrumb-item">Browse Events</li>
                     </ol>
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <!--<i class="fas fa-table mr-1"></i>-->
-                            <span class="icomoon" style="color: black"></span>&nbsp;&nbsp;My Events - As Participant
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Event<br>Name</th>
-                                            <th>Creation<br>Time</th>
-                                            <th>Starting<br>Time</th>
-                                            <th>Ending<br>Time</th>
-                                            <th>Popularity<br>(signups)</th>
-                                            <th>Type</th>
-                                            <th>Location<br>Type</th>
-                                            <th>Delete<br>Signup</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Event Name</th>
-                                            <th>Creation Time</th>
-                                            <th>Starting Time</th>
-                                            <th>Ending Time</th>
-                                            <th>Popularity</th>
-                                            <th>Type</th>
-                                            <th>Location Type</th>
-                                            <th>Delete<br>Signup</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
+                    <h3>Photos (uploaded by organiser)</h3>
+                    <div id="no_images">The Organiser Hasn't Uploaded Any Photo Yet!</div>
+                    <div id="images_present">
+                        <div id="center_img_div"></div>
                     </div>
-                    <!--<div id="par_content">
-                            <h4>Participation Record</h4><br>
-                            <ul id="par_record"></ul>
-                        </div>-->
-
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
@@ -182,14 +136,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="./js/scripts.js"></script>
-    <script src="./js/my_events_par.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />
-    <link href="./css/styles.css" rel="stylesheet" />
+    <script src="./js/event_photo.js"></script>
 </body>
 
 </html>

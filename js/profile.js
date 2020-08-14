@@ -4,25 +4,25 @@ $(function () {
     var t_id = JSON.parse(t).data.id;
     var t_secret = JSON.parse(t).data.attributes.secret;
     $.ajax({
-        type: "GET", 
+        type: "GET",
         dataType: "json",
         url: endpoint + "/user",
         headers: {
             "X-Token-ID": t_id,
             "X-Token-Secret": t_secret
         },
-        async: true, 
+        async: true,
         processData: false,
-        contentType: "application/vnd.api+json", 
-        success: function(u) {  
+        contentType: "application/vnd.api+json",
+        success: function (u) {
             var temp = JSON.stringify(u);
             localStorage.setItem("user", temp);
-        }, 
-        error: function(jqXHR, textStatus, errorThrown) {
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
             handle_error(jqXHR, textStatus, errorThrown);
-        },  
+        },
     });
-    
+
     var user_get = JSON.parse(localStorage.getItem("user"));
     console.log(user_get);
     var u_nickname = user_get.data.attributes.nickname;
@@ -38,27 +38,27 @@ $(function () {
     $("#show_u_nusid").attr('value', u_nusid);
     $("#show_u_email").attr('value', u_email);
     $("#show_u_type").attr('value', u_type);
-    $("#profile_photo").attr('src', "https://www.gravatar.com/avatar/" + u_photo+"?s=512");
-    
+    $("#profile_photo").attr('src', "https://www.gravatar.com/avatar/" + u_photo + "?s=512");
 
 
-    $(window).bind('beforeunload', function(){
+
+    $(window).bind('beforeunload', function () {
         return "Are you sure you want to leave this site?";
     });
 
     function handle_error(jqXHR, textStatus, errorThrown) {
-        window.location.href = "error_page.html?status=" + jqXHR.status + "&detail=" + errors[0].detail;
+        window.location.href = "error.html?status=" + jqXHR.status + "&detail=" + errors[0].detail;
     }
 
 
-    $('#profile_update').click(function() {
+    $('#profile_update').click(function () {
         var msg = confirm("Are you sure you would like to update your profile?");
         if (msg == true) {
             var t = window.localStorage.getItem("auth_token");
             var t_id = JSON.parse(t).data.id;
             var t_secret = JSON.parse(t).data.attributes.secret;
             $.ajax({
-                type: "PATCH", 
+                type: "PATCH",
                 dataType: "json",
                 url: endpoint + "/user",
                 headers: {
@@ -67,52 +67,28 @@ $(function () {
                 },
                 data: JSON.stringify({
                     "data": {
-                        "type": "user", 
-                        "id": JSON.parse(window.localStorage.getItem("user")).data.id, 
+                        "type": "user",
+                        "id": JSON.parse(window.localStorage.getItem("user")).data.id,
                         "attributes": {
                             "nickname": $("#input_new_nickname").val()
                         }
                     }
                 }),
-                async: true, 
+                async: true,
                 processData: false,
-                contentType: "application/vnd.api+json", 
-                success: function(u) {  
+                contentType: "application/vnd.api+json",
+                success: function (u) {
                     alert("You have successfully updated your nickname!");
                     $("#login_name").text(u.data.attributes.nickname);
                     var usr = JSON.stringify(u);
                     localStorage.setItem("user", usr);
-                }, 
-                error: function(jqXHR, textStatus, errorThrown) {
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
                     handle_error(jqXHR, textStatus, errorThrown);
-                },  
+                },
             });
         }
     });
-
-    /*$('#userGetInfo').click(function() {
-        var t = localStorage.getItem("auth_token");
-        var t_id = JSON.parse(t).data.id;
-        var t_secret = JSON.parse(t).data.attributes.secret;
-        var temp_id = JSON.parse(localStorage.getItem("user")).data.id;
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url:"http://schrodinger-box-test.ixnet.work:8080/api/user/" + temp_id,
-            headers: {
-                "X-Token-ID": t_id,
-                "X-Token-Secret": t_secret
-            },
-            async: false,
-            success: function(u) {
-                process_user_info(u);
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                handle_error(jqXHR, textStatus, errorThrown);
-            }, 
-        });
-    });*/
-
 });
 
 

@@ -1,4 +1,4 @@
-$(function () { 
+$(function () {
 
     var user_get = JSON.parse(window.localStorage.getItem("user"));
     $("#login_name").text(user_get.data.attributes.nickname);
@@ -6,9 +6,9 @@ $(function () {
     var t = JSON.parse(window.localStorage.getItem("auth_token"));
     $("#tokenID").text(t.data.id);
     $("#tokenSecret").text(t.data.attributes.secret);
-    
+
     function ISO8601_convert(time_id) {
-        var output_time = $(time_id).val()+":00.000Z";
+        var output_time = $(time_id).val() + ":00.000Z";
         var new_hour;
         var new_day;
         var temp = Number(output_time.substr(11, 2))
@@ -44,7 +44,7 @@ $(function () {
                 new_month = 1;
                 new_day = 1;
             } else if (
-                ((new_month == 1 || new_month == 3 || new_month == 5 || new_month == 7 ||  new_month == 8 || new_month == 10) && new_day == 32) || 
+                ((new_month == 1 || new_month == 3 || new_month == 5 || new_month == 7 || new_month == 8 || new_month == 10) && new_day == 32) ||
                 ((new_month == 4 || new_month == 6 || new_month == 9 || new_month == 11) && new_day == 31) ||
                 ((new_year % 4 == 0 && new_year % 100 != 0 || new_year % 400 == 0) && new_month == 2 && new_day == 30) ||
                 (new_month == 2 && new_day == 29)) {
@@ -57,10 +57,10 @@ $(function () {
     }
 
     function handle_error(jqXHR, textStatus, errorThrown) {
-        window.location.href = "error_page.html?status=" + jqXHR.status + "&detail=" + errors[0].detail;
+        window.location.href = "error.html?status=" + jqXHR.status + "&detail=" + errors[0].detail;
     }
 
-    $('#userGetInfo').click(function() {
+    $('#userGetInfo').click(function () {
         var t = localStorage.getItem("auth_token");
         var t_id = JSON.parse(t).data.id;
         var t_secret = JSON.parse(t).data.attributes.secret;
@@ -68,24 +68,24 @@ $(function () {
         $.ajax({
             type: "GET",
             dataType: "json",
-            url:"http://schrodinger-box-test.ixnet.work:8080/api/user/" + temp_id,
+            url: "http://schrodinger-box-test.ixnet.work:8080/api/user/" + temp_id,
             headers: {
                 "X-Token-ID": t_id,
                 "X-Token-Secret": t_secret
             },
             async: false,
-            success: function(u) {
+            success: function (u) {
                 process_user_info(u);
             },
-            error: function(jqXHR, textStatus, errorThrown) {
+            error: function (jqXHR, textStatus, errorThrown) {
                 handle_error(jqXHR, textStatus, errorThrown);
-            }, 
+            },
         });
     });
 
 
 
-    $('#eventGetInfo').click(function() {
+    $('#eventGetInfo').click(function () {
         var t = localStorage.getItem("auth_token");
         var t_id = JSON.parse(t).data.id;
         var t_secret = JSON.parse(t).data.attributes.secret;
@@ -94,58 +94,58 @@ $(function () {
         $.ajax({
             type: "GET",
             dataType: "json",
-            url:"http://schrodinger-box-test.ixnet.work:8080/api/event/" + "evt_id",
+            url: "http://schrodinger-box-test.ixnet.work:8080/api/event/" + "evt_id",
             headers: {
                 "X-Token-ID": t_id,
                 "X-Token-Secret": t_secret
             },
             async: false,
-            success: function(e) {
+            success: function (e) {
                 temp_write_event(e);
             },
-            error: function(jqXHR, textStatus, errorThrown) {
+            error: function (jqXHR, textStatus, errorThrown) {
                 handle_error(jqXHR, textStatus, errorThrown);
             }
         });
     });
 
-    function temp_write_event(e) {}
+    function temp_write_event(e) { }
 
-    $("#signUpSubmit").click(function() {
+    $("#signUpSubmit").click(function () {
         var t = localStorage.getItem("auth_token");
         var t_id = JSON.parse(t).data.id;
         var t_secret = JSON.parse(t).data.attributes.secret;
         //var evt_id = JSON.parse(localStorage.getItem("event_" + event_id)).data.id;
         var evt_id = JSON.parse(localStorage.getItem("event")).data.id;
-        $.ajax({  
-            type: "POST", 
+        $.ajax({
+            type: "POST",
             dataType: "json",
-            url:"http://schrodinger-box-test.ixnet.work:8080/api/event/signup",
+            url: "http://schrodinger-box-test.ixnet.work:8080/api/event/signup",
             headers: {
                 "X-Token-ID": t_id,
                 "X-Token-Secret": t_secret
             },
-            data:{
+            data: {
                 "data": {
-                  "type": "eventSignup",
-                  "relationships": {
-                    "event": {
-                      "data": {
-                        "type": "event",
-                        "id": evt_id
-                      }
+                    "type": "eventSignup",
+                    "relationships": {
+                        "event": {
+                            "data": {
+                                "type": "event",
+                                "id": evt_id
+                            }
+                        }
                     }
-                  }
                 }
             },
-            async: false,  
-            error: function() { 
-                alert("Unsuccessful Sign Up. Please try again.");  
-            },  
-            success: function(e) {  
+            async: false,
+            error: function () {
+                alert("Unsuccessful Sign Up. Please try again.");
+            },
+            success: function (e) {
                 alert("Congratualations! You have successfully signed up!");
                 temp_write_signup_event(e);
-            }  
+            }
         });
     });
 });

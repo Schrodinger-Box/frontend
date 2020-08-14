@@ -1,8 +1,8 @@
-$(function () { 
+$(function () {
 
     $("#status").html(get_query("status"));
     if ((detail = get_query("detail")) !== null) {
-         $("#detail").html("Error detail: " + detail)
+        $("#detail").html("Error detail: " + detail)
     }
 
     function get_query(key) {
@@ -13,15 +13,5 @@ $(function () {
         }
         return null;
     }
-
-    /*function get_status(){
-        var status;
-        var url = window.location.search;
-        if(url.indexOf("?") != -1){
-            status = url.substr(url.indexOf("=")+1);
-        }
-        return status;
-    }*/
-
 });
 
