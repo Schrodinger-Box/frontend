@@ -1,6 +1,4 @@
 $(function () {
-
-    var endpoint = "https://schrodinger-box.pit.ovh/api";
     $('#user_register_button').click(function () {
         var t = window.localStorage.getItem("auth_token");
         var t_id = JSON.parse(t).data.id;
@@ -37,10 +35,6 @@ $(function () {
             }
         });
     });
-
-    function handle_error(jqXHR, textStatus, errorThrown) {
-        window.location.href = "error.html?status=" + jqXHR.status + "&detail=" + errors[0].detail;
-    }
 });
 
 

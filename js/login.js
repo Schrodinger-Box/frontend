@@ -1,6 +1,4 @@
 $(function () {
-
-  var endpoint = "https://schrodinger-box.pit.ovh/api";
   var auth_window;
   var token_check_interval;
 
@@ -81,11 +79,6 @@ $(function () {
       }
     });
   };
-
-  function handle_error(jqXHR, textStatus, errorThrown) {
-    window.location.href = "error.html?status=" + jqXHR.status + "&detail=" + errors[0].detail;
-  }
-
 });
 
 

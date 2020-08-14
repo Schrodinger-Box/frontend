@@ -1,7 +1,4 @@
 $(function () {
-
-    var endpoint = "https://schrodinger-box.pit.ovh/api";
-
     var user_get = JSON.parse(window.localStorage.getItem("user"));
     $("#login_name").text(user_get.data.attributes.nickname);
 
@@ -68,8 +65,8 @@ $(function () {
                     handle_error(jqXHR, textStatus, errorThrown);
                 }
             });
-            table.row.add(['<a href="event.html?e_i=' + key + '">' + corresp.attributes.title + '</a><span class="icomoon></span>"', ISO8601_to_normal_time(corresp.attributes.created_at),
-            ISO8601_to_normal_time(corresp.attributes.time_begin), ISO8601_to_normal_time(corresp.attributes.time_end),
+            table.row.add(['<a href="event.html?e_i=' + key + '">' + corresp.attributes.title + '</a><span class="icomoon></span>"', (new Date(corresp.attributes.created_at)).toSGString(),
+            (new Date(corresp.attributes.time_begin), ISO8601_to_normal_time(corresp.attributes.time_end)).toSGString(),
                 signup_number, corresp.attributes.type, corresp.attributes.location.type, '<a><span class="icomoon delete_signup" id="' + value.id + '" style="color: red"></span></a>']);
         });
         table.draw();
@@ -123,42 +120,6 @@ $(function () {
         localStorage.signup_map = JSON.stringify(Array.from(signup_map));
         localStorage.org_map = JSON.stringify(Array.from(org_map));
     }
-
-
-    function ISO8601_to_normal_time(s) {
-        var new_year = Number(s.substr(0, 4));
-        var new_month = Number(s.substr(5, 2));
-        var new_day = Number(s.substr(8, 2));
-        var new_hour = Number(s.substr(11, 2)) + 8;
-        var new_minute = s.substr(14, 2);
-        var new_second = s.substr(17, 2);
-        if (new_hour >= 24) {
-            new_day = new_day + 1;
-            new_hour = new_hour - 24;
-            if (new_hour < 10) {
-                new_hour = "0" + new_hour.toString();
-            }
-            if (new_month == 12 && new_day == 32) {
-                new_year = new_year + 1;
-                new_month = 1;
-                new_day = 1;
-            } else if (
-                ((new_month == 1 || new_month == 3 || new_month == 5 || new_month == 7 || new_month == 8 || new_month == 10) && new_day == 32) ||
-                ((new_month == 4 || new_month == 6 || new_month == 9 || new_month == 11) && new_day == 31) ||
-                ((new_year % 4 == 0 && new_year % 100 != 0 || new_year % 400 == 0) && new_month == 2 && new_day == 30) ||
-                (new_month == 2 && new_day == 29)) {
-                new_month = new_month + 1;
-                new_day = 1;
-            }
-        }
-        var output_time = new_year + "-" + new_month + "-" + new_day + " " + new_hour + ":" + new_minute + ":" + new_second;
-        return output_time;
-    }
-
-    function handle_error(jqXHR, textStatus, errorThrown) {
-        window.location.href = "error.html?status=" + jqXHR.status + "&detail=" + errors[0].detail;
-    }
-
 });
 
 

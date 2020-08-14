@@ -1,6 +1,4 @@
 $(function () {
-
-    var endpoint = "https://schrodinger-box.pit.ovh/api";
     var t = localStorage.getItem("auth_token");
     var t_id = JSON.parse(t).data.id;
     var t_secret = JSON.parse(t).data.attributes.secret;
@@ -104,8 +102,8 @@ $(function () {
             $("#event_firt_photo").attr("src", temp_src);
             $("#event_firt_photo").css("border", "1px solid rgb(220, 220, 220)");
             $("#eventName").html(curr_event.data.attributes.title);
-            $("#event_details").html("<strong>Date and Time:</strong>&nbsp;&nbsp;" + ISO8601_to_normal_time(curr_event.data.attributes.time_begin) + "&nbsp;to&nbsp;" +
-                ISO8601_to_normal_time(curr_event.data.attributes.time_end) + "<br><strong>Type:</strong>&nbsp;&nbsp;" + curr_event.data.attributes.type +
+            $("#event_details").html("<strong>Date and Time:</strong>&nbsp;&nbsp;" + (new Date(curr_event.data.attributes.time_begin)).toSGString() + "&nbsp;to&nbsp;" +
+                (new Date(curr_event.data.attributes.time_end)).toSGString() + "<br><strong>Type:</strong>&nbsp;&nbsp;" + curr_event.data.attributes.type +
                 "<br><strong>Location:</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Type:</strong>&nbsp;&nbsp;" + curr_event.data.attributes.location.type +
                 "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Address:</strong>&nbsp;&nbsp;" + curr_event.data.attributes.location.address + ", " + curr_event.data.attributes.location.zip_code +
                 "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Building:</strong>&nbsp;&nbsp;" + curr_event.data.attributes.location.building);
@@ -184,13 +182,13 @@ $(function () {
                     user_email_md5 + "?s=512'></div><div class='review_content'><div class='review_head'><div class='review_profile_name'>" + user_nickname +
                     "&nbsp;(organiser)</div><div class='review_star'>" + add_score +
                     "</div></div><div class='review_text'>" + review_text + "</div><div class='review_edit_date'>last edit on " +
-                    ISO8601_to_normal_time(review_edit_date) + "</div></div></div>" + add_li;
+                    (new Date(review_edit_date)).toSGString() + "</div></div></div>" + add_li;
             } else {
                 add_li += "<div class='review_div'><div class='review_photo_div'><img class='review_profile_photo' src='https://www.gravatar.com/avatar/" +
                     user_email_md5 + "?s=512'></div><div class='review_content'><div class='review_head'><div class='review_profile_name'>" + user_nickname +
                     "</div><div class='review_star'>" + add_score +
                     "</div></div><div class='review_text'>" + review_text + "</div><div class='review_edit_date'>last edit on " +
-                    ISO8601_to_normal_time(review_edit_date) + "</div></div></div>";
+                    (new Date(review_edit_date)).toSGString() + "</div></div></div>";
             }
             overall_star += review_score;
             overall_star_number++;
@@ -365,41 +363,6 @@ $(function () {
         }
         return null;
     };
-
-    function handle_error(jqXHR, textStatus, errorThrown) {
-        window.location.href = "error.html?status=" + jqXHR.status + "&detail=" + errors[0].detail;
-    }
-
-
-    function ISO8601_to_normal_time(s) {
-        var new_year = Number(s.substr(0, 4));
-        var new_month = Number(s.substr(5, 2));
-        var new_day = Number(s.substr(8, 2));
-        var new_hour = Number(s.substr(11, 2)) + 8;
-        var new_minute = s.substr(14, 2);
-        var new_second = s.substr(17, 2);
-        if (new_hour >= 24) {
-            new_day = new_day + 1;
-            new_hour = new_hour - 24;
-            if (new_hour < 10) {
-                new_hour = "0" + new_hour.toString();
-            }
-            if (new_month == 12 && new_day == 32) {
-                new_year = new_year + 1;
-                new_month = 1;
-                new_day = 1;
-            } else if (
-                ((new_month == 1 || new_month == 3 || new_month == 5 || new_month == 7 || new_month == 8 || new_month == 10) && new_day == 32) ||
-                ((new_month == 4 || new_month == 6 || new_month == 9 || new_month == 11) && new_day == 31) ||
-                ((new_year % 4 == 0 && new_year % 100 != 0 || new_year % 400 == 0) && new_month == 2 && new_day == 30) ||
-                (new_month == 2 && new_day == 29)) {
-                new_month = new_month + 1;
-                new_day = 1;
-            }
-        }
-        var output_time = new_year + "-" + new_month + "-" + new_day + " " + new_hour + ":" + new_minute + ":" + new_second;
-        return output_time;
-    }
 
     $("#self_review_submit").css("height", $("#self_review_text").height() + "px");
 

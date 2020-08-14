@@ -1,5 +1,4 @@
 $(function () {
-    var endpoint = "https://schrodinger-box.pit.ovh/api";
     var t = localStorage.getItem("auth_token");
     var t_id = JSON.parse(t).data.id;
     var t_secret = JSON.parse(t).data.attributes.secret;
@@ -45,11 +44,6 @@ $(function () {
     $(window).bind('beforeunload', function () {
         return "Are you sure you want to leave this site?";
     });
-
-    function handle_error(jqXHR, textStatus, errorThrown) {
-        window.location.href = "error.html?status=" + jqXHR.status + "&detail=" + errors[0].detail;
-    }
-
 
     $('#profile_update').click(function () {
         var msg = confirm("Are you sure you would like to update your profile?");
