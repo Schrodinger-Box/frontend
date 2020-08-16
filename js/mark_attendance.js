@@ -2,15 +2,6 @@ $(function () {
     var t = localStorage.getItem("auth_token");
     var t_id = JSON.parse(t).data.id;
     var t_secret = JSON.parse(t).data.attributes.secret;
-
-    function get_url_params(key) {
-        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) {
-            return unescape(r[2]);
-        }
-        return null;
-    };
     var eve_id = get_url_params("evt");
 
     var uptime = undefined;

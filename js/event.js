@@ -355,15 +355,6 @@ $(function () {
         });
     }
 
-    function get_url_params(key) {
-        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) {
-            return unescape(r[2]);
-        }
-        return null;
-    };
-
     $("#self_review_submit").css("height", $("#self_review_text").height() + "px");
 
     var unstarred = true;
