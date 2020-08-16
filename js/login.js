@@ -12,7 +12,7 @@ $(function () {
             .then(request => fetch(request))
             .then(handleFirstResponse)
             .then(response => {
-                // deprecated, to be removed
+                // TODO: deprecated, to be removed
                 var token = JSON.stringify(response);
                 window.localStorage.setItem("auth_token", token);
 
@@ -50,7 +50,11 @@ $(function () {
             })
             .then(response => {
                 var usr = JSON.stringify(response);
+
+                // TODO: deprecated, to be removed
                 window.localStorage.setItem("user", usr);
+
+                putDBItem("data", "user_self", response.data);
                 location.href = "./dashboard.html";
             })
             .catch(error => {

@@ -24,6 +24,13 @@ request.onupgradeneeded = function (event) {
 function getDBItem(store, key) {
     return db.transaction("data").objectStore(store).get(key);
 }
+function getDBItemPromise(store, key) {
+    return new Promise((resolve, reject) => {
+        var request = getDBItem(store, key);
+        request.onsuccess = event => resolve(event);
+        request.onerror = error => reject(error);
+    })
+}
 function putDBItem(store, key, value) {
     return db.transaction("data", "readwrite").objectStore(store).put(value, key);
 }
@@ -83,12 +90,19 @@ function handleFirstResponse(response, ignoreNotOk = false) {
             });
         }
     } else {
-        return response.json();
+        if (response.status == 204) {
+            // there is nothing to decode if the response is 204 No Content
+            return null;
+        } else {
+            return response.json();
+        }
     }
 }
 
 // this returns a Request object
-async function getData(operationId, resourceId = null, resourcePayload = null, customPayload = false) {
+// relationships in this format:
+// [["key", "type", "id"], ...]
+async function getData(operationId, resourceId = null, resourcePayload = null, relationships = null, customPayload = false) {
     var operation = operationId.split(".")
     // construct url
     var url = endpoint + "/" + operation[0];
@@ -111,20 +125,39 @@ async function getData(operationId, resourceId = null, resourcePayload = null, c
             // unknown actionId type
             return null;
     }
-    // if resource ID presents, append it to URL
-    if (resourceId !== null) {
-        url = url + "/" + String(resourceId);
+    // if resource ID presents, append it to URL (for GET, POST and DELETE only)
+    // if resource ID starts with '?', it will be treated as an additional query parameter
+    if ((method == "GET" || method == "POST" || method == "DELETE") && resourceId !== null) {
+        resourceId = String(resourceId);
+        if (resourceId[0] == "?") {
+            url = url + resourceId;
+        } else {
+            url = url + "/" + resourceId;
+        }
     }
     // construct payload for POST and PATCH requests
     var payload;
     if (method == "POST" || method == "PATCH") {
         if (!customPayload) {
             payload = {
-                "type": operation[0],
-                "data": (resourcePayload === null) ? {} : resourcePayload
+                data: {
+                    type: operation[0],
+                    attributes: (resourcePayload === null) ? {} : resourcePayload
+                }
             };
+            if (relationships !== null) {
+                payload.data.relationships = {};
+                relationships.forEach(relationship => {
+                    payload.data.relationships[relationship[0]] = {
+                        "data": {
+                            "type": relationship[1],
+                            "id": relationship[2]
+                        }
+                    }
+                });
+            }
             if (resourceId !== null) {
-                payload.id = resourceId;
+                payload.data.id = String(resourceId);
             }
         } else {
             payload = resourcePayload;
@@ -138,19 +171,11 @@ async function getData(operationId, resourceId = null, resourcePayload = null, c
         "accept": "application/vnd.api+json"
     }
     // add token if exists
-    var getToken = () => {
-        return new Promise((resolve) => {
-            getDBItem("data", "token").onsuccess = function (event) {
-                resolve(event);
-            };
-        })
-    };
-    var tokenEvent = await getToken();
+    var tokenEvent = await getDBItemPromise("data", "token");
     if (tokenEvent.target.result !== undefined) {
         headers["X-Token-ID"] = tokenEvent.target.result.id;
         headers["X-Token-Secret"] = tokenEvent.target.result.attributes.secret;
     }
-
     // construct init
     var init = {
         method: method,
@@ -159,7 +184,7 @@ async function getData(operationId, resourceId = null, resourcePayload = null, c
         cache: "default"
     };
     if (payload !== null) {
-        init["body"] = payload;
+        init["body"] = JSON.stringify(payload);
     }
     return new Request(url, init);
 }

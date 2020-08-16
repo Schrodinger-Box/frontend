@@ -1,148 +1,126 @@
 $(function () {
-    var t = localStorage.getItem("auth_token");
-    var t_id = JSON.parse(t).data.id;
-    var t_secret = JSON.parse(t).data.attributes.secret;
     var event_id = get_url_params("e_i");
-    $.ajax({
-        type: "GET",
-        dataType: "json",
-        url: endpoint + "/user",
-        headers: {
-            "X-Token-ID": t_id,
-            "X-Token-Secret": t_secret
-        },
-        async: true,
-        processData: false,
-        contentType: "application/vnd.api+json",
-        success: function (u) {
-            $("#self_review_photo").attr("src", "https://www.gravatar.com/avatar/" + u.data.attributes.email_md5 + "?s=512");
-            localStorage.setItem("user", JSON.stringify(u));
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            handle_error(jqXHR, textStatus, errorThrown);
-        }
-    });
-    var user_get = JSON.parse(window.localStorage.getItem("user"));
-    $("#login_name").text(user_get.data.attributes.nickname);
-    var signed_up = false;
     var signup_id = undefined;
     var signup_status = undefined;
-    var is_organizer = false;
+    var user;
+    var image_sas = { qp: null, endpoint: null };
 
-    //uptime to see if network still working, then use ajax/search from local
-    $.ajax({
-        type: "GET",
-        dataType: "json",
-        url: endpoint + "/event/" + event_id,
-        headers: {
-            "X-Token-ID": t_id,
-            "X-Token-Secret": t_secret
-        },
-        async: true,
-        processData: false,
-        contentType: "application/vnd.api+json",
-        success: function (curr_event) {
+    // load user-related information
+    getDBItemPromise("data", "user_self")
+        .then(event => {
+            // user SHOULD have been stored at the IndexedDB at this point of time
+            user = event.target.result;
+            $("#self_review_photo").attr("src", "https://www.gravatar.com/avatar/" + user.attributes.email_md5 + "?s=512");
+            $("#login_name").text(user.attributes.nickname);
+        })
+        // get files Shared Access Signature (SAS)
+        .then(() => getData("files.get", "?type=images"))
+        .then(request => fetch(request))
+        .then(handleFirstResponse)
+        .then(response => {
+            image_sas.qp = response.meta.qp;
+            image_sas.endpoint = response.meta.endpoint;
+        })
+        // get event data after loading user data
+        .then(() => getData("event.get", event_id))
+        .then(request => fetch(request))
+        .then(handleFirstResponse)
+        .then(response => {
             var temp_src;
-            if ("images" in curr_event.data.relationships) {
-                var temp_id = curr_event.data.relationships.images.data[0].id;
+            if ("images" in response.data.relationships) {
+                // taking ID of the first image
+                var temp_id = response.data.relationships.images.data[0].id;
                 var file_name = undefined;
                 var counter = 0;
                 while (file_name == undefined) {
-                    if (curr_event.included[counter].type == "file" && curr_event.included[counter].id == temp_id) {
-                        file_name = curr_event.included[counter].attributes.filename;
+                    if (response.included[counter].type == "file" && response.included[counter].id == temp_id) {
+                        file_name = response.included[counter].attributes.filename;
                     } else {
                         counter++;
                         console.log(counter);
                     }
                 }
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    url: endpoint + "/files?type=images",
-                    headers: {
-                        "X-Token-ID": t_id,
-                        "X-Token-Secret": t_secret
-                    },
-                    async: false,
-                    processData: false,
-                    contentType: "application/vnd.api+json",
-                    success: function (m) {
-
-                        temp_src = m.meta.endpoint + file_name + "?" + m.meta.qp;
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        handle_error(jqXHR, textStatus, errorThrown);
-                    }
-                });
-            } else if (curr_event.data.attributes.type == "Leisure") {
-                temp_src = "./css/images/event_photo/leisure_2.jpg";
-            } else if (curr_event.data.attributes.type == "Research") {
-                temp_src = "./css/images/event_photo/research_2.jpg";
-            } else if (curr_event.data.attributes.type == "Religious") {
-                temp_src = "./css/images/event_photo/religion.png";
-            } else if (curr_event.data.attributes.type == "Camp") {
-                temp_src = "./css/images/event_photo/camp.jpg";
-            } else if (curr_event.data.attributes.type == "Performance") {
-                temp_src = "./css/images/event_photo/performance.jpg";
-            } else if (curr_event.data.attributes.type == "Meeting") {
-                temp_src = "./css/images/event_photo/meeting.jpg";
-            } else if (curr_event.data.attributes.type == "Sports") {
-                temp_src = "./css/images/event_photo/sports.jpg";
-            } else if (curr_event.data.attributes.type == "Talk") {
-                temp_src = "./css/images/event_photo/workshop_2.jpg";
-            } else if (curr_event.data.attributes.type == "Workshop") {
-                temp_src = "./css/images/event_photo/Workshop.jpeg";
-            } else if (curr_event.data.attributes.type == "Competition") {
-                temp_src = "./css/images/event_photo/Workshop.jpeg";
-            } else if (curr_event.data.attributes.type == "Volunteering") {
-                temp_src = "./css/images/event_photo/leisure_1.jpg";
+                temp_src = image_sas.endpoint + file_name + "?" + image_sas.qp;
             } else {
-                temp_src = "./css/images/wolf_event_img.jpg";
+                switch (response.data.attributes.type) {
+                    case "Leisure":
+                        temp_src = "./css/images/event_photo/leisure_2.jpg";
+                        break;
+                    case "Research":
+                        temp_src = "./css/images/event_photo/research_2.jpg";
+                        break;
+                    case "Religious":
+                        temp_src = "./css/images/event_photo/religion.png";
+                        break;
+                    case "Camp":
+                        temp_src = "./css/images/event_photo/camp.jpg";
+                        break;
+                    case "Performance":
+                        temp_src = "./css/images/event_photo/performance.jpg";
+                        break;
+                    case "Meeting":
+                        temp_src = "./css/images/event_photo/meeting.jpg";
+                        break;
+                    case "Sports":
+                        temp_src = "./css/images/event_photo/sports.jpg";
+                        break;
+                    case "Talk":
+                        temp_src = "./css/images/event_photo/workshop_2.jpg";
+                        break;
+                    case "Workshop":
+                    case "Competition":
+                        temp_src = "./css/images/event_photo/Workshop.jpeg";
+                        break;
+                    case "Volunteering":
+                        temp_src = "./css/images/event_photo/leisure_1.jpg";
+                        break;
+                    default:
+                        temp_src = "./css/images/wolf_event_img.jpg";
+                }
             }
             $("#event_firt_photo").attr("src", temp_src);
             $("#event_firt_photo").css("border", "1px solid rgb(220, 220, 220)");
-            $("#eventName").html(curr_event.data.attributes.title);
-            $("#event_details").html("<strong>Date and Time:</strong>&nbsp;&nbsp;" + (new Date(curr_event.data.attributes.time_begin)).toSGString() + "&nbsp;to&nbsp;" +
-                (new Date(curr_event.data.attributes.time_end)).toSGString() + "<br><strong>Type:</strong>&nbsp;&nbsp;" + curr_event.data.attributes.type +
-                "<br><strong>Location:</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Type:</strong>&nbsp;&nbsp;" + curr_event.data.attributes.location.type +
-                "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Address:</strong>&nbsp;&nbsp;" + curr_event.data.attributes.location.address + ", " + curr_event.data.attributes.location.zip_code +
-                "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Building:</strong>&nbsp;&nbsp;" + curr_event.data.attributes.location.building);
-            show_reviews(curr_event);
-            if (curr_event.data.relationships.organizer.data.id == JSON.parse(window.localStorage.getItem("user")).data.id) {
+            $("#eventName").html(response.data.attributes.title);
+            $("#event_details").html(
+                "<strong>Date and Time:</strong> " + (new Date(response.data.attributes.time_begin)).toSGString() + " to " + (new Date(response.data.attributes.time_end)).toSGString() + "<br>" +
+                "<strong>Type:</strong> " + response.data.attributes.type + "<br>" +
+                "<strong>Location:</strong><br>" +
+                "<p class=\"address\"><strong>Type:</strong> " + response.data.attributes.location.type + "</p>" +
+                "<p class=\"address\"><strong>Address:</strong> " + response.data.attributes.location.address + ", " + response.data.attributes.location.zip_code + "</p>" +
+                "<p class=\"address\"><strong>Building:</strong> " + response.data.attributes.location.building + "</p>"
+            );
+            show_reviews(response);
+            var is_organizer = false;
+            if (response.data.relationships.organizer.data.id == JSON.parse(window.localStorage.getItem("user")).data.id) {
                 is_organizer = true;
-                page_write_event();
                 $("#self_review_textarea").attr("placeholder", "Publish an announcement or review as the organiser!");
                 $("#photos_link").html("<a class='icomoon' id='link_to_photos' href='view_photos.html?evt=" + event_id + "'></a>");
                 $("#mark_attendance").html("<a class='icomoon' id='mark_att_link' href='mark_attendance.html?evt=" + event_id + "'></a>");
                 $("#mark_attendance").css("display", "inline-block");
                 $("#mark_two").css("display", "inline-block");
-
             } else {
-                var details = curr_event.included;
-                var count = 0;
-                while (count < details.length) {
-                    if (details[count].type == "event_signup" && details[count].relationships.user.data.id == user_get.data.id) {
+                var details = response.included;
+                var signed_up = false;
+                details.forEach(detail => {
+                    if (detail.type == "event_signup" && detail.relationships.user.data.id == user.id) {
                         signed_up = true;
-                        signup_id = details[count].id;
-                        signup_status = details[count].attributes.status;
-                        break;
+                        signup_id = detail.id;
+                        signup_status = detail.attributes.status;
+                        // note: break cannot be used in forEach
                     }
-                    count++;
+                });
+                if (signed_up) {
+                    show_delete_btn();
+                } else if (!is_organizer) {
+                    show_signup_btn();
                 }
-                page_write_event();
                 $("#self_review_textarea").attr("placeholder", "Review as a participant!");
                 $("#photos_link").html("<a class='icomoon' id='link_to_photos' href='view_photos.html?evt=" + event_id + "'></a>");
                 $("#mark_attendance").css("display", "none");
                 $("#mark_two").css("display", "none");
             }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            handle_error(jqXHR, textStatus, errorThrown);
-        }
-    });
-
-
-
+        })
+        .catch(handleCatch);
 
     function show_reviews(event) {
         let past_reviews = new Map();
@@ -208,47 +186,16 @@ $(function () {
         } else if (signup_status == "reviewed") {
             alert("You have already written an review!");
         } else {
-            $.ajax({
-                type: "PATCH",
-                dataType: "json",
-                url: endpoint + "/event_signup",
-                headers: {
-                    "X-Token-ID": t_id,
-                    "X-Token-Secret": t_secret
-                },
-                data: JSON.stringify({
-                    "data": {
-                        "id": signup_id,
-                        "type": "event_signup",
-                        "attributes": {
-                            "status": "reviewed",
-                            "review_score": current_star,
-                            "review_text": $("#self_review_textarea").val().toString()
-                        }
-                    }
-                }),
-                processData: false,
-                contentType: "application/vnd.api+json",
-                async: true,
-                success: function (data) {
-
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    handle_error(jqXHR, textStatus, errorThrown);
-                }
-            });
+            getData("event_signup.update", signup_id, {
+                "status": "reviewed",
+                "review_score": current_star,
+                "review_text": $("#self_review_textarea").val().toString()
+            })
+                .then(request => fetch(request))
+                .then(handleFirstResponse)
+                .catch(handleCatch)
         }
-
     })
-    function page_write_event() {
-        if (signed_up) {
-            show_delete_btn();
-        } else {
-            if (!is_organizer) {
-                show_signup_btn();
-            }
-        }
-    }
 
     function show_signup_btn() {
         $("#addCollect").css("display", "inline-block");
@@ -266,21 +213,10 @@ $(function () {
         $("#delete_sign_up").css("display", "inline-block");
     }
 
-    $("#event_sign_up_icomoon").click(function () {
-        signup_after_confirm();
-    });
-
-    $("#signUpSubmit").click(function () {
-        signup_after_confirm();
-    });
-
-    $("#delete_sign_up_icomoon").click(function () {
-        delete_after_confirm();
-    });
-
-    $("#delete_sign_up").click(function () {
-        delete_after_confirm();
-    });
+    $("#event_sign_up_icomoon").click(signup_after_confirm);
+    $("#signUpSubmit").click(signup_after_confirm);
+    $("#delete_sign_up_icomoon").click(delete_after_confirm);
+    $("#delete_sign_up").click(delete_after_confirm);
 
     function signup_after_confirm() {
         var msg = confirm("I confirm that I would like to sign up for this event.");
@@ -297,175 +233,63 @@ $(function () {
     }
 
     function event_sign_up() {
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: endpoint + "/event_signup",
-            headers: {
-                "X-Token-ID": t_id,
-                "X-Token-Secret": t_secret
-            },
-            data: JSON.stringify({
-                "data": {
-                    "type": "event_signup",
-                    "relationships": {
-                        "event": {
-                            "data": {
-                                "type": "event",
-                                "id": event_id
-                            }
-                        }
-                    }
-                }
-            }),
-            processData: false,
-            contentType: "application/vnd.api+json",
-            async: true,
-            error: function (jqXHR, textStatus, errorThrown) {
-                handle_error(jqXHR, textStatus, errorThrown);
-            },
-            success: function (e) {
+        getData("event_signup.create", null, null, [["event", "event", event_id]])
+            .then(request => fetch(request))
+            .then(handleFirstResponse)
+            .then(() => {
                 alert("Congratualations! You have successfully signed up!");
                 window.location.reload();
-                //change_after_signup();
-            }
-        });
+            })
+            .catch(handleCatch);
     }
 
     function delete_signUp() {
-        $.ajax({
-            type: "DELETE",
-            dataType: "json",
-            url: endpoint + "/event_signup/" + signup_id,
-            headers: {
-                "X-Token-ID": t_id,
-                "X-Token-Secret": t_secret
-            },
-            processData: false,
-            contentType: "application/vnd.api+json",
-            async: true,
-            success: function (e) {
+        getData("event_signup.delete", signup_id)
+            .then(request => fetch(request))
+            .then(handleFirstResponse)
+            .then(() => {
                 alert("You have successfully deleted your sign up!");
                 window.location.reload();
-                //change_after_delete();
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                handle_error(jqXHR, textStatus, errorThrown);
-            }
-        });
+            })
+            .catch(handleCatch);
     }
 
     $("#self_review_submit").css("height", $("#self_review_text").height() + "px");
 
+    // codes related to star presentation
     var unstarred = true;
     var current_star = 0;
+    var star_words = ["one", "two", "three", "four", "five"];
 
     function color_star(star_num) {
-        $("#self_review_star_five").css("color", "#bbbbbb");
-        $("#self_review_star_four").css("color", "#bbbbbb");
-        $("#self_review_star_three").css("color", "#bbbbbb");
-        $("#self_review_star_two").css("color", "#bbbbbb");
-        $("#self_review_star_one").css("color", "#bbbbbb");
-        if (star_num == 1) {
-            $("#self_review_star_one").css("color", "orange");
-        } else if (star_num == 2) {
-            $("#self_review_star_two").css("color", "orange");
-            $("#self_review_star_one").css("color", "orange");
-        } else if (star_num == 3) {
-            $("#self_review_star_three").css("color", "orange");
-            $("#self_review_star_two").css("color", "orange");
-            $("#self_review_star_one").css("color", "orange");
-        } else if (star_num == 4) {
-            $("#self_review_star_four").css("color", "orange");
-            $("#self_review_star_three").css("color", "orange");
-            $("#self_review_star_two").css("color", "orange");
-            $("#self_review_star_one").css("color", "orange");
-        } else if (star_num == 5) {
-            $("#self_review_star_five").css("color", "orange");
-            $("#self_review_star_four").css("color", "orange");
-            $("#self_review_star_three").css("color", "orange");
-            $("#self_review_star_two").css("color", "orange");
-            $("#self_review_star_one").css("color", "orange");
+        for (i = 0; i < star_num; ++i) {
+            $("#self_review_star_" + star_words[i]).css("color", "orange");
+        }
+        if (star_num < 5) {
+            for (i = 4; i >= star_num; --i) {
+                $("#self_review_star_" + star_words[i]).css("color", "#bbbbbb");
+            }
         }
     }
 
-    $("#self_review_star_five").mouseover(function () {
-        color_star(5);
-    });
-    $("#self_review_star_five").mouseout(function () {
-        if (unstarred) {
-            color_star(0);
-        } else {
-            color_star(current_star);
-        }
-    });
-    $("#self_review_star_five").click(function () {
-        color_star(5);
-        unstarred = false;
-        current_star = 5;
-    });
-    $("#self_review_star_four").mouseover(function () {
-        color_star(4);
-    });
-    $("#self_review_star_four").mouseout(function () {
-        if (unstarred) {
-            color_star(0);
-        } else {
-            color_star(current_star);
-        }
-    });
-    $("#self_review_star_four").click(function () {
-        color_star(4);
-        unstarred = false;
-        current_star = 4;
-    });
-    $("#self_review_star_three").mouseover(function () {
-        color_star(3);
-    });
-    $("#self_review_star_three").mouseout(function () {
-        if (unstarred) {
-            color_star(0);
-        } else {
-            color_star(current_star);
-        }
-    });
-    $("#self_review_star_three").click(function () {
-        color_star(3);
-        unstarred = false;
-        current_star = 3;
-    });
-    $("#self_review_star_two").mouseover(function () {
-        color_star(2);
-    });
-    $("#self_review_star_two").mouseout(function () {
-        if (unstarred) {
-            color_star(0);
-        } else {
-            color_star(current_star);
-        }
-    });
-    $("#self_review_star_two").click(function () {
-        color_star(2);
-        unstarred = false;
-        current_star = 2;
-    });
-    $("#self_review_star_one").mouseover(function () {
-        color_star(1);
-    });
-    $("#self_review_star_one").mouseout(function () {
-        if (unstarred) {
-            color_star(0);
-        } else {
-            color_star(current_star);
-        }
-    });
-    $("#self_review_star_one").click(function () {
-        color_star(1);
-        unstarred = false;
-        current_star = 1;
-    });
-
-
+    // add listener to each of the stars
+    star_words.forEach((word, key) => {
+        var actual_star = key + 1;
+        var selector = $("#self_review_star_" + word);
+        selector.mouseover(() => color_star(actual_star));
+        selector.mouseout(() => {
+            if (unstarred) {
+                color_star(0);
+            } else {
+                color_star(current_star);
+            }
+        });
+        selector.click(() => {
+            color_star(actual_star);
+            unstarred = false;
+            current_star = actual_star;
+        })
+    })
 });
 
 
