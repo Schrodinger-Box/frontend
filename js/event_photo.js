@@ -165,117 +165,38 @@ $(function () {
 
     $("#self_review_submit").css("height", $("#self_review_text").height() + "px");
 
+    // codes related to star presentation
     var unstarred = true;
     var current_star = 0;
+    var star_words = ["one", "two", "three", "four", "five"];
 
     function color_star(star_num) {
-        $("#self_review_star_five").css("color", "#bbbbbb");
-        $("#self_review_star_four").css("color", "#bbbbbb");
-        $("#self_review_star_three").css("color", "#bbbbbb");
-        $("#self_review_star_two").css("color", "#bbbbbb");
-        $("#self_review_star_one").css("color", "#bbbbbb");
-        if (star_num == 1) {
-            $("#self_review_star_one").css("color", "orange");
-        } else if (star_num == 2) {
-            $("#self_review_star_two").css("color", "orange");
-            $("#self_review_star_one").css("color", "orange");
-        } else if (star_num == 3) {
-            $("#self_review_star_three").css("color", "orange");
-            $("#self_review_star_two").css("color", "orange");
-            $("#self_review_star_one").css("color", "orange");
-        } else if (star_num == 4) {
-            $("#self_review_star_four").css("color", "orange");
-            $("#self_review_star_three").css("color", "orange");
-            $("#self_review_star_two").css("color", "orange");
-            $("#self_review_star_one").css("color", "orange");
-        } else if (star_num == 5) {
-            $("#self_review_star_five").css("color", "orange");
-            $("#self_review_star_four").css("color", "orange");
-            $("#self_review_star_three").css("color", "orange");
-            $("#self_review_star_two").css("color", "orange");
-            $("#self_review_star_one").css("color", "orange");
+        for (i = 0; i < star_num; ++i) {
+            $("#self_review_star_" + star_words[i]).css("color", "orange");
+        }
+        if (star_num < 5) {
+            for (i = 4; i >= star_num; --i) {
+                $("#self_review_star_" + star_words[i]).css("color", "#bbbbbb");
+            }
         }
     }
 
-    $("#self_review_star_five").mouseover(function () {
-        color_star(5);
-    });
-    $("#self_review_star_five").mouseout(function () {
-        if (unstarred) {
-            color_star(0);
-        } else {
-            color_star(current_star);
-        }
-    });
-    $("#self_review_star_five").click(function () {
-        color_star(5);
-        unstarred = false;
-        current_star = 5;
-    });
-    $("#self_review_star_four").mouseover(function () {
-        color_star(4);
-    });
-    $("#self_review_star_four").mouseout(function () {
-        if (unstarred) {
-            color_star(0);
-        } else {
-            color_star(current_star);
-        }
-    });
-    $("#self_review_star_four").click(function () {
-        color_star(4);
-        unstarred = false;
-        current_star = 4;
-    });
-    $("#self_review_star_three").mouseover(function () {
-        color_star(3);
-    });
-    $("#self_review_star_three").mouseout(function () {
-        if (unstarred) {
-            color_star(0);
-        } else {
-            color_star(current_star);
-        }
-    });
-    $("#self_review_star_three").click(function () {
-        color_star(3);
-        unstarred = false;
-        current_star = 3;
-    });
-    $("#self_review_star_two").mouseover(function () {
-        color_star(2);
-    });
-    $("#self_review_star_two").mouseout(function () {
-        if (unstarred) {
-            color_star(0);
-        } else {
-            color_star(current_star);
-        }
-    });
-    $("#self_review_star_two").click(function () {
-        color_star(2);
-        unstarred = false;
-        current_star = 2;
-    });
-    $("#self_review_star_one").mouseover(function () {
-        color_star(1);
-    });
-    $("#self_review_star_one").mouseout(function () {
-        if (unstarred) {
-            color_star(0);
-        } else {
-            color_star(current_star);
-        }
-    });
-    $("#self_review_star_one").click(function () {
-        color_star(1);
-        unstarred = false;
-        current_star = 1;
-    });
-
-
+    // add listener to each of the stars
+    star_words.forEach((word, key) => {
+        var actual_star = key + 1;
+        var selector = $("#self_review_star_" + word);
+        selector.mouseover(() => color_star(actual_star));
+        selector.mouseout(() => {
+            if (unstarred) {
+                color_star(0);
+            } else {
+                color_star(current_star);
+            }
+        });
+        selector.click(() => {
+            color_star(actual_star);
+            unstarred = false;
+            current_star = actual_star;
+        })
+    })
 });
-
-
-
-
